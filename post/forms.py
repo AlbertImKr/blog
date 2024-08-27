@@ -13,8 +13,8 @@ class PostCreateForm(forms.ModelForm):
                            'type': 'text', 'class': 'form-control',
                            'placeholder': 'Post title'}),
             'content': forms.Textarea(
-                    attrs={'class': 'form-control', 'rows': '10',
-                           'placeholder': 'Add content'}),
+                    attrs={'class': 'd-none', 'rows': '10',
+                           'placeholder': 'Add content', 'id': 'quill-content'}),
             'tags': forms.SelectMultiple(
                     attrs={'class': 'form-control', 'rows': '1',
                            'placeholder': 'business, finance, health'}),
