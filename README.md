@@ -17,8 +17,8 @@
 | URL                                         | HTTP METHOD | Views Function | HTML File Name | Note       |
 |---------------------------------------------|-------------|----------------|----------------|------------|
 | `/`                                         | `GET`       |                |                | 홈화면        |
-| `/posts/:pk/`                               | `GET`       |                |                | 게시글 작성 페이지 |
-| `/posts/:pk/`                               | `POST`      |                |                | 게시글 생성     |
+| `/posts/new`                                | `GET`       |                |                | 게시글 작성 페이지 |
+| `/posts/`                                   | `POST`      |                |                | 게시글 생성     |
 | `/posts/?tag=:tag&title=:title&sort=:sort/` | `GET`       |                |                | 게시글 검색     |
 | `/posts/:pk/detail/`                        | `GET`       |                |                | 게시글 수정 페이지 |
 | `/posts/:pk/`                               | `PUT`       |                |                | 게시글 수정     |
