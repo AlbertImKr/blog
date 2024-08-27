@@ -46,8 +46,6 @@
                             <!-- Email -->
                             <div class="mb-3">
                                 <label class="form-label" for="{{ form.email.id_for_label }}">Email address</label>
-<!--                                <input type="email" class="form-control" id="exampleInputEmail1"-->
-<!--                                       aria-describedby="emailHelp" placeholder="E-mail" name="email">-->
                                 {{ form.email }}
                                 <small id="emailHelp" class="form-text">We'll never share your email with anyone
                                     else.</small>
@@ -55,15 +53,11 @@
                             <!-- Password -->
                             <div class="mb-3">
                                 <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
-<!--                                <input type="password" class="form-control" id="password"-->
-<!--                                       placeholder="*********" name="password1">-->
                                 {{ form.password1 }}
                             </div>
                             <!-- Password -->
                             <div class="mb-3">
                                 <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
-<!--                                <input type="password" class="form-control" id="confirm_password"-->
-<!--                                       placeholder="*********" name="password2">-->
                                 {{ form.password2 }}
                             </div>
                             <!-- Button -->
@@ -74,7 +68,7 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-8 text-sm-end">
-                                    <span>Have an account? <a href="signin.html"><u>Sign in</u></a></span>
+                                    <span>Have an account? <a href="{% url 'signin' %}"><u>Sign in</u></a></span>
                                 </div>
                                 {% if error %}
                                 <div class="alert alert-danger" role="alert">
