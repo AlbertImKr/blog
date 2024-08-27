@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -8,8 +9,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
     tags = models.ManyToManyField('Tag', related_name='posts')
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE,
-                               related_name='posts')
+    # author = models.ForeignKey('auth.User', on_delete=models.CASCADE,
+    #                            related_name='posts')
     category = models.ForeignKey('Category', on_delete=models.CASCADE,
                                  related_name='posts')
 

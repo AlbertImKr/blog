@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.views.generic import CreateView
 from django.views.generic import View
 
 from .models import Post
+from .forms import PostCreateForm
 
 
 class HomeView(View):
@@ -24,3 +26,19 @@ class HomeView(View):
 
         # 렌더링 및 응답 반환
         return render(request, self.template_name, context)
+
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostCreateForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        print("성공했습니다.")
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("실패했습니다.")
+        print(form.errors)
+        return super().form_invalid(form)
