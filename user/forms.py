@@ -32,3 +32,15 @@ class UserSignupForm(UserCreationForm):
         if exists:
             raise forms.ValidationError('이메일이 이미 존재합니다.')
         return email
+
+
+class UserSigninForm(forms.Form):
+    email = forms.EmailField(
+            widget=forms.EmailInput(
+                    attrs={'class': 'form-control', 'id': 'email',
+                           'placeholder': 'Email', 'required': 'True'}))
+
+    password = forms.CharField(
+            widget=forms.PasswordInput(
+                    attrs={'class': 'form-control', 'id': 'password',
+                           'placeholder': 'Password', 'required': 'True'}))
