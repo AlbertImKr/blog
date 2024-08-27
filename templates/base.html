@@ -110,7 +110,7 @@ Header START -->
                 <!-- Top bar left -->
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="signin.html">Login / Join</a>
+                        <a class="nav-link" href="{% url 'signin' %}">Login / Join</a>
                     </li>
                 </ul>
                 <!-- Top bar right -->
@@ -200,7 +200,7 @@ Header START -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <!-- Logo START -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{% url 'home' %}">
                 <img class="navbar-brand-item light-mode-item" src="{% static '/assets/images/logo.svg' %}" alt="logo">
                 <img class="navbar-brand-item dark-mode-item" src="{% static 'assets/images/logo-light.svg' %}"
                      alt="logo">
@@ -219,7 +219,7 @@ Header START -->
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav navbar-nav-scroll mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html" id="homeMenu">Home</a>
+                        <a class="nav-link active" href="{% url 'home' %}" id="homeMenu">Home</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>

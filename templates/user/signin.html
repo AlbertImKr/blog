@@ -2,8 +2,8 @@
 {% load static %}
 {% block css %}
 
-<!-- Favicon -->
 <link href="{% static 'assets/images/favicon.ico' %}" rel="shortcut icon">
+
 
 <!-- Google Font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -21,6 +21,7 @@
 <!-- Theme CSS -->
 <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
 
+
 {% endblock %}
 {% block content %}
 <!-- **************** MAIN CONTENT START **************** -->
@@ -32,53 +33,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-lg-8 col-xl-6 mx-auto">
-                    <div class="bg-primary bg-opacity-10 rounded p-4 p-sm-5">
-                        <h2>Create your free account </h2>
+                    <div class="p-4 p-sm-5 bg-primary bg-opacity-10 rounded">
+                        <h2>Log in to your account</h2>
                         <!-- Form START -->
-                        <form class="mt-4" method="post" action="{% url 'signup' %}">
+                        <form class="mt-4" method="post">
                             {% csrf_token %}
-                            <!-- Username -->
-                            <div class="mb-3">
-                                <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
-                                {{ form.username }}
-                                <small id="usernameHelp" class="form-text">Your username will be public</small>
-                            </div>
                             <!-- Email -->
                             <div class="mb-3">
-                                <label class="form-label" for="{{ form.email.id_for_label }}">Email address</label>
+                                <label class="form-label" for="email">Email address</label>
                                 {{ form.email }}
-                                <small id="emailHelp" class="form-text">We'll never share your email with anyone
-                                    else.</small>
                             </div>
                             <!-- Password -->
                             <div class="mb-3">
-                                <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
-                                {{ form.password1 }}
+                                <label class="form-label" for="password">Password</label>
+                                {{ form.password }}
                             </div>
-                            <!-- Password -->
-                            <div class="mb-3">
-                                <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
-                                {{ form.password2 }}
+                            <!-- Checkbox -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">keep me signed in</label>
                             </div>
                             <!-- Button -->
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
-                                    <button type="submit" class="btn btn-success" aria-describedby="signupHelp">Sign me
-                                        up
-                                    </button>
+                                    <button type="submit" class="btn btn-success">Sign me in</button>
                                 </div>
                                 <div class="col-sm-8 text-sm-end">
-                                    <span>Have an account? <a href="{% url 'signin' %}"><u>Sign in</u></a></span>
+                                    <span>Don't have an account? <a href="{% url 'signup' %}"><u>Sign up</u></a></span>
                                 </div>
-                                {% if error %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ error }}
-                                </div>
-                                {% endif %}
                             </div>
                         </form>
                         <!-- Form END -->
                         <hr>
+                        {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -90,7 +81,6 @@
 </main>
 <!-- **************** MAIN CONTENT END **************** -->
 {% endblock %}
-
 <!-- =======================
 Footer START -->
 {% block footer %}
@@ -106,6 +96,7 @@ Footer END -->
 
 <!-- =======================
 JS libraries, plugins and custom scripts -->
+
 {% block scripts %}
 <!-- Bootstrap JS -->
 <script crossorigin="anonymous"
