@@ -36,7 +36,6 @@ class SignInView(View):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            print(email, password)
             user = User.objects.get(email=email)
             if user.check_password(password):
                 login(request, user)
