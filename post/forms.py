@@ -37,9 +37,12 @@ class PostCreateForm(forms.ModelForm):
         }
 
     def clean_tags(self):
+        print(self.cleaned_data)
         tags_string = self.cleaned_data.get('tags', '')
+        print(tags_string)
         tags = [tag.strip() for tag in tags_string.split(',') if
                 tag.strip()]
+        print(tags)
         if len(tags) > 14:
             raise forms.ValidationError('최대 14개의 태그만 입력할 수 있습니다.')
         return tags

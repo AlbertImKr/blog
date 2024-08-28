@@ -666,10 +666,13 @@ var e = {
                 modules: {toolbar: '#quilltoolbar'},
                 theme: 'snow'
             });
+            const quillContent = document.getElementById('quill-content');
+            if (quillContent.textContent) {
+                editor.setContents(JSON.parse(quillContent.textContent));
+            }
             editor.on('text-change', function (delta, oldDelta, source) {
                 const contentDelta = editor.getContents();
-                document.getElementById(
-                    'quill-content').textContent = JSON.stringify(contentDelta);
+                quillContent.textContent = JSON.stringify(contentDelta);
             });
         }
     },
