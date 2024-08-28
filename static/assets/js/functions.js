@@ -28,6 +28,7 @@ Table Of Content
 18 OVERLAY SCROLLBAR
 19 DASHBOARD CHART
 20 TRAFFIC CHART
+21 RENDER DELTA USE QUILL
 ====================== */
 
 "use strict";
@@ -103,7 +104,8 @@ var e = {
             e.videoPlyr(),
             e.overlayScrollbars(),
             e.trafficsourcesChart(),
-            e.trafficstatsChart()
+            e.trafficstatsChart(),
+            e.renderDeltaUseQuill();
     },
     isVariableDefined: function (el) {
         return typeof !!el && (el) != 'undefined' && el != null;
@@ -667,7 +669,7 @@ var e = {
             editor.on('text-change', function (delta, oldDelta, source) {
                 const contentDelta = editor.getContents();
                 document.getElementById(
-                    'quill-content').value = JSON.stringify(contentDelta);
+                    'quill-content').textContent = JSON.stringify(contentDelta);
             });
         }
     },
@@ -837,6 +839,22 @@ var e = {
         }
     },
     // END: Traffic Chart
+    // START: 21 Render Delta Use Quill
+    renderDeltaUseQuill: function () {
+        const deltaContent = document.getElementById('delta-content');
+        const deltaData = document.getElementById('delta-data');
+        if (deltaContent && deltaData) {
+            const quill = new Quill('#delta-content', {
+                theme: 'snow',
+                readOnly: true,
+                modules: {
+                    toolbar: false
+                }
+            });
+            var deltaJson = JSON.parse(deltaData.textContent);
+            quill.setContents(deltaJson);
+        }
+    },
 };
 e.init();
 

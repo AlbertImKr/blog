@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DetailView
 from django.views.generic import View
 
 from .forms import PostCreateForm
+from .models import Category
 from .models import Post
 
 
@@ -39,3 +42,18 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostDetailView(DetailView):
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # 이 유저의 카테고리 목록에서 포스트가 제일 많은 카테고리 5개를 가져옴
+        post = self.get_object()
+        author = post.author
+        categories = Category.objects.filter(posts__author=author).annotate(
+                post_count=Count('posts')).order_by('-post_count')[:5]
+        context['categories'] = categories
+        return context
