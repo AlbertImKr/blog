@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DetailView
+from django.views.generic import UpdateView
 from django.views.generic import View
 
 from .forms import PostCreateForm
@@ -57,3 +58,17 @@ class PostDetailView(DetailView):
                 post_count=Count('posts')).order_by('-post_count')[:5]
         context['categories'] = categories
         return context
+
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = PostCreateForm
+    template_name = 'post/post_update_form.html'
+    success_url = reverse_lazy('home')
+    login_url = reverse_lazy('signin')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.author != self.request.user:
+            raise PermissionError('수정 권한이 없습니다.')
+        return obj

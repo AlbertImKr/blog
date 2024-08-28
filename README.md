@@ -4,40 +4,42 @@
 
 ## WBS
 
-[![WBS](https://github.com/user-attachments/assets/b02561f9-53d1-428c-bfed-e7c48cbd26bc)](https://github.com/users/AlbertImKr/projects/5/views/2)
+[![WBS1](https://github.com/user-attachments/assets/c62ad0c2-2271-45e3-8faa-bf9f70d8b58a)](https://github.com/users/AlbertImKr/projects/5/views/2)
+[![WBS2](https://github.com/user-attachments/assets/4041ec85-08dd-4279-a96e-aa1a86638f41)](https://github.com/users/AlbertImKr/projects/5/views/2)
 
 ## ERD
 
-[![ERD](https://github.com/user-attachments/assets/17c8389e-2df6-4da5-a6e9-b76e726f8b1a)](https://www.erdcloud.com/d/48L5ncfrCxRGcuixX)
+[![ERD](https://github.com/user-attachments/assets/4d5d90a2-7577-42cf-8775-de00d869f4e6)](https://www.erdcloud.com/d/48L5ncfrCxRGcuixX)
 
 ## URL 구조
 
 ### 게시글 App
 
-| URL                                         | HTTP METHOD | Views Function | HTML File Name | Note       |
-|---------------------------------------------|-------------|----------------|----------------|------------|
-| `/`                                         | `GET`       |                |                | 홈화면        |
-| `/posts/new`                                | `GET`       |                |                | 게시글 작성 페이지 |
-| `/posts/`                                   | `POST`      |                |                | 게시글 생성     |
-| `/posts/?tag=:tag&title=:title&sort=:sort/` | `GET`       |                |                | 게시글 검색     |
-| `/posts/:pk/detail/`                        | `GET`       |                |                | 게시글 수정 페이지 |
-| `/posts/:pk/`                               | `PUT`       |                |                | 게시글 수정     |
-| `/posts/:pk/`                               | `DELETE`    |                |                | 게시글 삭제     |
+| URL                                         | HTTP METHOD | Views Function   | HTML File Name               | Note       |
+|---------------------------------------------|-------------|------------------|------------------------------|------------|
+| `/`                                         | `GET`       | `HomeView`       | `post/index.html`            | 홈화면        |
+| `/posts/new`                                | `GET`       | `PostCreateView` | `post/post_form.html`        | 게시글 작성 페이지 |
+| `/posts/new`                                | `POST`      | `PostCreateView` | `post/post_form.html`        | 게시글 생성     |
+| `/posts/?tag=:tag&title=:title&sort=:sort/` | `GET`       |                  |                              | 게시글 검색     |
+| `/posts/:pk/`                               | `GET`       | `PostDetailView` | `post/post_detail.html`      | 게시글 개별 조회  |
+| `/posts/:pk/edit/`                          | `GET`       | `PostUpdateView` | `post/post_update_form.html` | 게시글 수정 페이지 |
+| `/posts/:pk/edit/`                          | `POST`      | `PostUpdateView` | `post/post_update_form.html` | 게시글 수정     |
+| `/posts/:pk/`                               | `DELETE`    |                  |                              | 게시글 삭제     |
 
 ### 유저 App
 
-| URL                    | HTTP METHOD | Views Function | HTML File Name | Note           |
-|------------------------|-------------|----------------|----------------|----------------|
-| `/users/:pk/`          | `GET`       |                |                | 유저 개인 페이지      |
-| `/users/:pk/profile/`  | `GET`       |                |                | 유저 프로필 수정 페이지  |
-| `/users/:pk/profile/`  | `PUT`       |                |                | 유저 프로필 수정      |
-| `/users/:pk/password/` | `GET`       |                |                | 유저 비밀번호 수정 페이지 |
-| `/users/:pk/password/` | `PUT`       |                |                | 유저 비밀번호 수정     |
-| `/signin/`             | `GET`       |                |                | 로그인 페이지        |
-| `/signin/`             | `POST`      |                |                | 로그인            |
-| `/signout/`            | `POST`      |                |                | 로그아웃           |
-| `/signup/`             | `GET`       |                |                | 회원가입 페이지       |
-| `/signup/`             | `POST`      |                |                | 회원가입           |
+| URL                    | HTTP METHOD | Views Function | HTML File Name     | Note           |
+|------------------------|-------------|----------------|--------------------|----------------|
+| `/users/:pk/`          | `GET`       |                |                    | 유저 개인 페이지      |
+| `/users/:pk/profile/`  | `GET`       |                |                    | 유저 프로필 수정 페이지  |
+| `/users/:pk/profile/`  | `PUT`       |                |                    | 유저 프로필 수정      |
+| `/users/:pk/password/` | `GET`       |                |                    | 유저 비밀번호 수정 페이지 |
+| `/users/:pk/password/` | `PUT`       |                |                    | 유저 비밀번호 수정     |
+| `/signin/`             | `GET`       | `SignInView`   | `user/signin.html` | 로그인 페이지        |
+| `/signin/`             | `POST`      | `SignInView`   | `user/signin.html` | 로그인            |
+| `/signout/`            | `POST`      | `SignOutView`  |                    | 로그아웃           |
+| `/signup/`             | `GET`       | `SignupView`   | `user/signup.html` | 회원가입 페이지       |
+| `/signup/`             | `POST`      | `SignupView`   | `user/signup.html` | 회원가입           |
 
 
 
