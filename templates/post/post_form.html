@@ -46,10 +46,16 @@
                         <!-- Card body -->
                         <div class="card-body">
                             <!-- Form START -->
-                            <form method="post">
+                            <form method="post" href="{% url 'post_create' %}">
                                 {% csrf_token %}
                                 <!-- Main form -->
                                 <div class="row">
+                                    <!-- 에러 메시지 -->
+                                    {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.errors }}
+                                    </div>
+                                    {% endif %}
                                     <div class="col-12">
                                         <!-- Post name -->
                                         <div class="mb-3">
@@ -60,12 +66,12 @@
                                     </div>
 
                                     <!-- Short description -->
-                                    <!--                                    <div class="col-12">-->
-                                    <!--                                        <div class="mb-3">-->
-                                    <!--                                            <label class="form-label">Post Content</label>-->
-                                    <!--&lt;!&ndash;                                            {{ form.content }}&ndash;&gt;-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Short description </label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
                                     <!-- Main toolbar -->
                                     <div class="col-12">
                                         <div class="col-md-12">
@@ -180,7 +186,7 @@
 
 {% endblock %}
 {% block footer %}
-<footer class="bg-dark fixed-bottom">
+<footer class="bg-dark">
     {% include 'foot_copyright.html' %}
 </footer>
 {% endblock %}

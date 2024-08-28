@@ -1,9 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import View
 
-from .models import Post
 from .forms import PostCreateForm
+from .models import Post
 
 
 class HomeView(View):
@@ -28,17 +30,12 @@ class HomeView(View):
         return render(request, self.template_name, context)
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostCreateForm
-    success_url = '/'
+    success_url = reverse_lazy('home')
+    login_url = reverse_lazy('signin')
 
     def form_valid(self, form):
-        print("성공했습니다.")
-        print(form.cleaned_data)
+        form.instance.author = self.request.user
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        print("실패했습니다.")
-        print(form.errors)
-        return super().form_invalid(form)
