@@ -57,7 +57,21 @@ class SignOutView(View):
 
 
 class UserPostListView(LoginRequiredMixin, View):
-    template_name = 'user/user_posts.html'
+    template_name = 'user/posts.html'
+
+    def get(self, request):
+        posts = self.request.user.posts.all()
+
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, self.template_name, {'page_obj': page_obj,
+                                                    'total_posts': posts.count})
+
+
+class UserManageView(LoginRequiredMixin, View):
+    template_name = 'user/manage.html'
 
     def get(self, request):
         posts = self.request.user.posts.all()
