@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -23,7 +24,7 @@ class SignupView(View):
                       {'error': form.errors, 'form': form})
 
 
-class LoginView(View):
+class SignInView(View):
     form_class = UserSigninForm
     template_name = 'user/signin.html'
 
@@ -35,7 +36,6 @@ class LoginView(View):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            print(email, password)
             user = User.objects.get(email=email)
             if user.check_password(password):
                 login(request, user)
@@ -46,3 +46,9 @@ class LoginView(View):
                                'error': '이메일 또는 비밀번호가 일치하지 않습니다.'})
         return render(request, self.template_name,
                       {'form': form, 'error': form.errors})
+
+
+class SignOutView(View):
+    def post(self, request):
+        logout(request)
+        return redirect('home')
