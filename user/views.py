@@ -23,7 +23,7 @@ class SignupView(View):
                       {'error': form.errors, 'form': form})
 
 
-class LoginView(View):
+class SignInView(View):
     form_class = UserSigninForm
     template_name = 'user/signin.html'
 
