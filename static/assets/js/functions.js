@@ -667,7 +667,7 @@ var e = {
             editor.on('text-change', function (delta, oldDelta, source) {
                 const contentDelta = editor.getContents();
                 document.getElementById(
-                    'quill-content').value = JSON.stringify(contentDelta);
+                    'quill-content').textContent = JSON.stringify(contentDelta);
             });
         }
     },
