@@ -1,6 +1,8 @@
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import View
@@ -52,3 +54,17 @@ class SignOutView(View):
     def post(self, request):
         logout(request)
         return redirect('home')
+
+
+class UserPostListView(LoginRequiredMixin, View):
+    template_name = 'user/user_posts.html'
+
+    def get(self, request):
+        posts = self.request.user.posts.all()
+
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, self.template_name, {'page_obj': page_obj,
+                                                    'total_posts': posts.count})
