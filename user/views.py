@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -46,3 +47,9 @@ class SignInView(View):
                                'error': '이메일 또는 비밀번호가 일치하지 않습니다.'})
         return render(request, self.template_name,
                       {'form': form, 'error': form.errors})
+
+
+class SignOutView(View):
+    def post(self, request):
+        logout(request)
+        return redirect('home')
