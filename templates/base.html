@@ -84,9 +84,12 @@
             <!-- Nav START -->
             <ul class="nav d-block flex-column my-4">
                 <li class="nav-item h5">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="{% url 'home' %}"><i class="bi bi-house-door me-1"></i>Home</a>
                 <li class="nav-item h5">
-                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="contact.html"><i class="bi bi-envelope-at-fill me-1"></i>Contact</a>
+                </li>
+                <li class="nav-item h5">
+                    <a class="nav-link" href="about.html"><i class="bi bi-person-circle me-1"></i>About</a>
                 </li>
             </ul>
             <!-- Nav END -->
@@ -95,7 +98,7 @@
             <!-- Address -->
             <p class="text-body mb-2 fw-bold">대한민국</p>
             <address class="mb-0">경기도 시흥시</address>
-            <a href="#" class="text-body d-block">guang7226961@naver.com</a>
+            <p class="text-body d-block">guang7226961@naver.com</p>
         </div>
     </div>
 </div>
@@ -127,9 +130,14 @@ Header START -->
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav navbar-nav-scroll mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'home' %}" id="homeMenu">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}" id="homeMenu"><i class="bi bi-house-door me-1"></i>Home</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_manage' %}"><i class="bi bi-toggles me-1"></i>manage</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-at-fill me-1"></i>Contact</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <!-- Font size accessibility START -->
@@ -195,7 +203,7 @@ Header START -->
                         </ul>
                     </div>
                     <!-- Dark mode options END -->
-
+                    {% if not user.is_authenticated %}
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link px-2 fs-5" href="https://www.linkedin.com/in/albertimkr/"><i
@@ -206,6 +214,7 @@ Header START -->
                                 class="fab fa-github"></i></a>
                         </li>
                     </ul>
+                    {% endif %}
                 </div>
             </div>
             <!-- Main navbar END -->
@@ -227,12 +236,14 @@ Header START -->
                     </div>
                 </div>
                 <!-- Offcanvas menu toggler -->
+                {% if not user.is_authenticated %}
                 <div class="nav-item">
                     <a class="nav-link p-0" data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button"
                        aria-controls="offcanvasMenu">
                         <i class="bi bi-text-right rtl-flip fs-2" data-bs-target="#offcanvasMenu"> </i>
                     </a>
                 </div>
+                {% endif %}
             </div>
             <!-- Nav right END -->
             {% if user.is_authenticated %}

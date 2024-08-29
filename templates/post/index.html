@@ -51,9 +51,9 @@
                                  data-items="1">
                                 <!-- Slider items -->
                                 {% for post in top_viewed_posts %}
-                                <div><a href="#" class="text-reset btn-link">{{ post.title }}</a></div>
+                                <div><a href="{% url 'post_detail' post.pk %}" class="text-reset btn-link">{{ post.title }}</a></div>
                                 {% empty %}
-                                <div><a href="#" class="text-reset btn-link">No trending posts</a></div>
+                                <div>No trending posts</div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -84,15 +84,15 @@
                                     class="fas fa-circle me-2 small fw-bold"></i>Lifestyle</a>
                                 <!-- Card title -->
                                 <h2 class="text-white h1">
-                                    <a href="post-single-4.html" class="btn-link stretched-link text-reset">
+                                    <a href="{% url 'post_detail' most_popular_post.pk %}" class="btn-link stretched-link text-reset">
                                         {{ most_popular_post.title }}
                                     </a>
                                 </h2>
                                 <p class="text-white">
-                                    {% if most_popular_post.content|length > 100 %}
-                                    {{ most_popular_post.content|slice:":100" }}...
+                                    {% if most_popular_post.description|length > 100 %}
+                                    {{ most_popular_post.description|slice:":100" }}...
                                     {% else %}
-                                    {{ most_popular_post.content }}
+                                    {{ most_popular_post.description }}
                                     {% endif %}
                                 </p>
                                 <!-- Card info -->
@@ -136,7 +136,7 @@
                                         <a href="#" class="badge text-bg-warning mb-2"><i
                                             class="fas fa-circle me-2 small fw-bold"></i>Technology</a>
                                         <!-- Card title -->
-                                        <h4 class="text-white"><a href="post-single-4.html"
+                                        <h4 class="text-white"><a href="{% url 'post_detail' second_most_popular_post.pk %}"
                                                                   class="btn-link stretched-link text-reset">
                                             {{ second_most_popular_post.title }}
                                         </a></h4>
@@ -169,7 +169,7 @@
                                         <a href="#" class="badge text-bg-success mb-2"><i
                                             class="fas fa-circle me-2 small fw-bold"></i>Business</a>
                                         <!-- Card title -->
-                                        <h4 class="text-white"><a href="post-single-4.html"
+                                        <h4 class="text-white"><a href="{% url 'post_detail' third_most_popular_post.pk %}"
                                                                   class="btn-link stretched-link text-reset">
                                             {{ third_most_popular_post.title }}
                                         </a></h4>
@@ -202,7 +202,7 @@
                                         <a href="#" class="badge text-bg-info mb-2"><i
                                             class="fas fa-circle me-2 small fw-bold"></i>Sports</a>
                                         <!-- Card title -->
-                                        <h4 class="text-white"><a href="post-single-4.html"
+                                        <h4 class="text-white"><a href="{% url 'post_detail' fourth_most_popular_post.pk %}"
                                                                   class="btn-link stretched-link text-reset">
                                             {{ fourth_most_popular_post.title }}
                                         </a></h4>
@@ -262,15 +262,15 @@
                                     </div>
                                 </div>
                                 <div class="card-body px-0 pt-3">
-                                    <h4 class="card-title mt-2"><a href="post-single.html"
+                                    <h4 class="card-title mt-2"><a href="{% url 'post_detail' post.pk %}"
                                                                    class="btn-link text-reset fw-bold">
                                         {{ post.title }}
                                     </a></h4>
                                     <p class="card-text">
-                                        {% if post.content|length > 100 %}
-                                        {{ post.content|slice:":100" }}...
+                                        {% if post.description|length > 100 %}
+                                        {{ post.description|slice:":100" }}...
                                         {% else %}
-                                        {{ post.content }}
+                                        {{ post.description }}
                                         {% endif %}
                                     </p>
                                     <!-- Card info -->
