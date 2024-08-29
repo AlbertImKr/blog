@@ -1,5 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -72,3 +75,13 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         if obj.author != self.request.user:
             raise PermissionError('수정 권한이 없습니다.')
         return obj
+
+
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user == post.author:
+        post.delete()
+        return JsonResponse({'status': '성공', 'message': '삭제되었습니다.'}, status=204)
+    return JsonResponse({'status': '실패', 'message': '삭제 권한이 없습니다.'}, status=403)
