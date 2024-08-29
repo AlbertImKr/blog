@@ -108,11 +108,11 @@
                 <ul class="pagination pagination-sm pagination-bordered mb-0">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=1">First</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page=1">First</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link"
-                           href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.previous_page_number }}">Prev</a>
                     </li>
                     {% else %}
                     <li class="page-item disabled">
@@ -124,34 +124,34 @@
                     {% endif %}
                     {% if page_obj.number > 2 %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=">{{ page_obj.number|add:-2 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-2 }}">{{ page_obj.number|add:-2 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.number > 1 %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=">{{ page_obj.number|add:-1 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-1 }}">{{ page_obj.number|add:-1 }}</a>
                     </li>
                     {% endif %}
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="?page={{ page_obj.number  }}">{{ page_obj.number }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number  }}">{{ page_obj.number }}</a>
                     </li>
                     {% if page_obj.number < page_obj.paginator.num_pages %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.number|add:+1 }}">{{ page_obj.number|add:+1 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:+1 }}">{{ page_obj.number|add:+1 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.number|add:+2 }}">{{ page_obj.number|add:+2 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}??page={{ page_obj.number|add:+2 }}">{{ page_obj.number|add:+2 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.next_page_number }}">Next</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link"
-                           href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.paginator.num_pages }}">Last</a>
                     </li>
                     {% else %}
                     <li class="page-item">

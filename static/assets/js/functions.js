@@ -29,6 +29,7 @@ Table Of Content
 19 DASHBOARD CHART
 20 TRAFFIC CHART
 21 RENDER DELTA USE QUILL
+22 AJAX PARTIAL LOADING
 ====================== */
 
 "use strict";
@@ -105,7 +106,8 @@ var e = {
             e.overlayScrollbars(),
             e.trafficsourcesChart(),
             e.trafficstatsChart(),
-            e.renderDeltaUseQuill();
+            e.renderDeltaUseQuill(),
+            e.ajaxPartialLoading()
     },
     isVariableDefined: function (el) {
         return typeof !!el && (el) != 'undefined' && el != null;
@@ -858,6 +860,68 @@ var e = {
             quill.setContents(deltaJson);
         }
     },
+    // END: Render Delta Use Quill
+    // START: 22 AJAX PARTIAL LOADING
+    ajaxPartialLoading: function () {
+        const ajaxLinks = e.selectAll('.ajax-link');
+        if (e.isVariableDefined(ajaxLinks)) {
+            ajaxLinks.forEach(link => {
+                const target = link.getAttribute('data-target');
+                const container = e.select(target);
+                if (!e.isVariableDefined(container)) {
+                    return;
+                }
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const url = link.getAttribute('href');
+
+                    fetch(url).then(response => {
+                        return response.text();
+                    }).then(data => {
+                        const baseUrl = window.location.pathname;
+                        const isExistParam = url.indexOf('?');
+
+                        const currentState = {
+                            html: document.documentElement.outerHTML,
+                            url: window.location.href
+                        }
+
+                        if (isExistParam > -1) {
+                            const urlParams = url.split('?');
+                            const currentParams = new URLSearchParams(
+                                window.location.search);
+
+                            urlParams[1].split('&').forEach(param => {
+                                const [key, value] = param.split('=');
+                                currentParams.set(key, value);
+                            });
+                            const newUrl = `${baseUrl}?${currentParams.toString()}`;
+                            window.history.pushState(currentState, '', newUrl);
+                        } else {
+                            window.history.pushState(currentState, '', baseUrl);
+                        }
+                        container.innerHTML = data;
+                        e.ajaxPartialLoading();
+                        e.popStateEvent()
+                    })
+                    .catch(error => {
+                        console.error(error)
+                    });
+                }.bind(this));
+            });
+        }
+    },
+    // END: AJAX PARTIAL LOADING
+    // START: 23 POPSTATE EVENT
+    popStateEvent: function () {
+        window.addEventListener('popstate', function (event) {
+            if (event.state) {
+                document.documentElement.innerHTML = event.state.html;
+                e.ajaxPartialLoading();
+            }
+        });
+    }
+    // END: POPSTATE EVENT
 };
 e.init();
 

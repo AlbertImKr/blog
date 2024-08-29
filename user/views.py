@@ -82,3 +82,17 @@ class UserManageView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, {'page_obj': page_obj,
                                                     'total_posts': posts.count})
+
+
+class UserPostListPartialView(LoginRequiredMixin, View):
+    template_name = 'user/post_list.html'
+
+    def get(self, request):
+        posts = self.request.user.posts.all()
+
+        paginator = Paginator(posts, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, self.template_name, {'page_obj': page_obj,
+                                                    'total_posts': posts.count})
