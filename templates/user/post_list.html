@@ -81,9 +81,12 @@
                     <!-- Table data -->
                     <td>
                         <div class="d-flex gap-2 justify-content-center">
-                            <a href="#" class="btn btn-light btn-round mb-0"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i
-                                class="bi bi-trash"></i></a>
+                            <form action="{% url 'post_delete' post.pk %}" method="post" class="ajax-delete">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-light btn-round mb-0"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i
+                                    class="bi bi-trash"></i></button>
+                            </form>
                             <a href="{% url 'post_update' post.pk %}"
                                class="btn btn-light btn-round mb-0"
                                data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i

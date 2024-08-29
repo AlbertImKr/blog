@@ -90,7 +90,7 @@ class UserPostListPartialView(LoginRequiredMixin, View):
     template_name = 'user/post_list.html'
 
     def get(self, request):
-        posts = self.request.user.posts.all()
+        posts = self.request.user.posts.all().order_by('-created_at')
 
         paginator = Paginator(posts, 10)
         page_number = request.GET.get('page')

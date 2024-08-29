@@ -29,7 +29,9 @@ Table Of Content
 19 DASHBOARD CHART
 20 TRAFFIC CHART
 21 RENDER DELTA USE QUILL
-22 AJAX PARTIAL LOADING
+22 AJAX POST LIST LOADING
+23 POPSTATE EVENT
+24 AJAX DELETE POST
 ====================== */
 
 "use strict";
@@ -107,7 +109,8 @@ var e = {
             e.trafficsourcesChart(),
             e.trafficstatsChart(),
             e.renderDeltaUseQuill(),
-            e.ajaxPartialLoading()
+            e.ajaxPostListLoading(),
+            e.ajaxDeletePost();
     },
     isVariableDefined: function (el) {
         return typeof !!el && (el) != 'undefined' && el != null;
@@ -861,8 +864,8 @@ var e = {
         }
     },
     // END: Render Delta Use Quill
-    // START: 22 AJAX PARTIAL LOADING
-    ajaxPartialLoading: function () {
+    // START: 22 AJAX POST LIST LOADING
+    ajaxPostListLoading: function () {
         const ajaxLinks = e.selectAll('.ajax-link');
         if (e.isVariableDefined(ajaxLinks)) {
             ajaxLinks.forEach(link => {
@@ -901,13 +904,14 @@ var e = {
                             window.history.pushState(currentState, '', baseUrl);
                         }
                         container.innerHTML = data;
-                        e.ajaxPartialLoading();
+                        e.ajaxPostListLoading();
                         e.popStateEvent()
                     })
                     .catch(error => {
                         console.error(error)
                     });
                 }.bind(this));
+
             });
         }
     },
@@ -917,11 +921,51 @@ var e = {
         window.addEventListener('popstate', function (event) {
             if (event.state) {
                 document.documentElement.innerHTML = event.state.html;
-                e.ajaxPartialLoading();
+                e.ajaxPostListLoading();
             }
         });
-    }
+    },
     // END: POPSTATE EVENT
+    // START: 24 AJAX DELETE POST
+    ajaxDeletePost: function () {
+        const deleteForms = e.selectAll('form.ajax-delete');
+        const container = document.getElementById('post-list');
+        if (e.isVariableDefined(deleteForms) && e.isVariableDefined(
+            container)) {
+            deleteForms.forEach(form => {
+                form.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const url = form.action
+                    const csrfToken = form.querySelector(
+                        'input[name="csrfmiddlewaretoken"]').value;
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest', // AJAX 요청임을 서버에 알림
+                            'X-CSRFToken': csrfToken // CSRF 토큰 헤더에 포함
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            // page-item active class 하위의 a 태그의 href 속성을 가져온다.
+                            const activeLink = e.select('.page-item.active a');
+                            const activeUrl = activeLink.getAttribute('href');
+                            fetch(activeUrl).then(response => {
+                                return response.text();
+                            }).then(data => {
+                                container.innerHTML = data;
+                                e.ajaxPostListLoading();
+                            }).catch(error => {
+                                console.error(error);
+                            });
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                });
+            });
+        }
+    }
 };
 e.init();
 
