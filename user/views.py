@@ -41,6 +41,8 @@ class SignInView(View):
             user = User.objects.get(email=email)
             if user.check_password(password):
                 login(request, user)
+                if 'next' in request.GET:
+                    return redirect(request.GET['next'])
                 return redirect('home')
             else:
                 return render(request, self.template_name,
