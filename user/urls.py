@@ -4,7 +4,7 @@ from .views import SignInView
 from .views import SignOutView
 from .views import SignupView
 from .views import UserManageView
-from .views import UserPostListPartialView
+from .views import UserPostListFragmentView
 from .views import UserPostListView
 
 urlpatterns = [
@@ -13,6 +13,6 @@ urlpatterns = [
     path('signout/', SignOutView.as_view(), name='signout'),
     path('users/posts/', UserPostListView.as_view(), name='user_posts'),
     path('users/manage/', UserManageView.as_view(), name='user_manage'),
-    path('users/posts/partial/', UserPostListPartialView.as_view(),
+    path('users/posts/fragment/', UserPostListFragmentView.as_view(),
          name='user_posts_partial'),
 ]

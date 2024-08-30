@@ -32,6 +32,7 @@ Table Of Content
 22 AJAX POST LIST LOADING
 23 AJAX DELETE POST
 24 CLICK SEARCH PARAMETER
+25 AJAX MORE POST LOADING
 ====================== */
 
 "use strict";
@@ -111,7 +112,8 @@ var e = {
             e.renderDeltaUseQuill(),
             e.ajaxPostListLoading(),
             e.ajaxDeletePost(),
-            e.clickSearchParameter();
+            e.clickSearchParameter(),
+            e.ajaxMorePostLoading();
     },
     isVariableDefined: function (el) {
         return typeof !!el && (el) != 'undefined' && el != null;
@@ -986,7 +988,29 @@ var e = {
                 });
             });
         }
-    }
+    },
+    // END: CLICK SEARCH PARAMETER
+    // START: 25 AJAX MORE POST LOADING
+    ajaxMorePostLoading: function () {
+        const morePosts = e.select('.more-posts');
+        const container = document.getElementById('more-button')
+        if (e.isVariableDefined(morePosts) && e.isVariableDefined(container)) {
+            morePosts.addEventListener('click', function (event) {
+                event.preventDefault();
+                const url = morePosts.getAttribute('href');
+                fetch(url).then(response => {
+                    return response.text();
+                }).then(data => {
+                    container.insertAdjacentHTML('beforebegin', data);
+                    container.remove();
+                    e.ajaxMorePostLoading();
+                }).catch(error => {
+                    console.error(error);
+                });
+            });
+        }
+    },
+    // END: AJAX MORE POST LOADING
 };
 e.init();
 

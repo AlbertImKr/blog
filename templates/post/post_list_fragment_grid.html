@@ -1,0 +1,55 @@
+{% load static %}
+{% load category_filters %}
+{% for post in posts %}
+<div class="col-md-6">
+    <div class="card card-overlay-bottom card-grid-sm card-bg-scale"
+         style="background-image:url({% static '/assets/images/blog/1by1/04.jpg' %});
+                                          background-position: center left; background-size: cover;">
+        <!-- Card Image overlay -->
+        <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
+            <div class="w-100 mt-auto">
+                <!-- Card category -->
+                <a href="{% url 'post_list' %}?category={{post.category.name}}"
+                   class="badge {{ post.category.name|random_text_bg_color }} mb-2">
+                    <i class="fas fa-circle me-2 small fw-bold"></i>
+                    {{ post.category.name }}
+                </a>
+                <!-- Card title -->
+                <h4 class="text-white">
+                    <a href="{% url 'post_detail' post.pk %}" class="btn-link stretched-link text-reset">
+                        {{ post.title }}
+                    </a>
+                </h4>
+                <!-- Card info -->
+                <ul class="nav nav-divider text-white-force align-items-center d-none d-sm-inline-block">
+                    <li class="nav-item position-relative">
+                        <div class="nav-link">by
+                            <a href="{% url 'post_list' %}?username={{post.author.username}}"
+                               class="stretched-link text-reset btn-link">
+                                {{ post.author }}
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">{{ post.created_at|date:"M d, Y" }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!-- Load more START -->
+<div class="col-12 text-center mt-5" id="more-button">
+    {% if page_obj.has_next %}
+    <a class="btn btn-primary-soft more-posts" role="button"
+       href="{% url 'post_list_partial_grid' %}?page={{ page_obj.number|add:1 }}">
+        Load more post
+        <i class="bi bi-arrow-down-circle ms-2 align-middle"></i>
+    </a>
+    {% else %}
+    <p class="btn btn-danger" role="button">
+        No more post
+    </p>
+    {% endif %}
+</div>
+<!-- Load more END -->
+<!-- Card item END -->

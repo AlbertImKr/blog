@@ -17,7 +17,7 @@ from .models import Post
 class HomeView(ListView):
     model = Post
     template_name = "post/index.html"
-    context_object_name = "latest_posts"
+    context_object_name = "posts"
     paginate_by = 10
     ordering = ["-created_at"]
 
@@ -142,9 +142,9 @@ class PostListView(ListView):
         return context
 
 
-class PostListPartialView(ListView):
+class PostListFragmentView(ListView):
     model = Post
-    template_name = "post/post_list_partial.html"
+    template_name = "post/post_list_fragment.html"
     context_object_name = "posts"
     paginate_by = 10
     ordering = ["-created_at"]
@@ -163,6 +163,14 @@ class PostListPartialView(ListView):
             queryset = queryset.filter(tags__name=tag)
 
         return queryset.order_by(*self.ordering)
+
+
+class PostListFragmentGridView(ListView):
+    model = Post
+    template_name = "post/post_list_fragment_grid.html"
+    context_object_name = "posts"
+    paginate_by = 10
+    ordering = ["-created_at"]
 
 
 @login_required

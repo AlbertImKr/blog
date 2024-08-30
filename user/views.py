@@ -94,8 +94,8 @@ class UserManageView(LoginRequiredMixin, View):
         )
 
 
-class UserPostListPartialView(LoginRequiredMixin, View):
-    template_name = "user/post_list.html"
+class UserPostListFragmentView(LoginRequiredMixin, View):
+    template_name = "user/post_list_fragment.html"
 
     def get(self, request):
         posts = self.request.user.posts.all().order_by("-created_at")
