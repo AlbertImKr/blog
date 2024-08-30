@@ -180,3 +180,11 @@ def delete_post(request, pk):
     return JsonResponse(
             {"status": "실패", "message": "삭제 권한이 없습니다."}, status=403
     )
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "post/category_list.html"
+    context_object_name = "categories"
+    paginate_by = 50
+    ordering = ["name"]
