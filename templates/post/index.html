@@ -84,7 +84,7 @@
                             <div class="w-100 mt-auto">
                                 <!-- Card category -->
                                 <a class="badge {{ most_popular_posts.0.category.name|random_text_bg_color }} mb-2"
-                                   href="{% url 'post_list' %}?category={{most_popular_posts.0.category.name}}">
+                                   href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.0.category.name}}">
                                     <i class="fas fa-circle me-2 small fw-bold"></i>{{ most_popular_posts.0.category }}</a>
                                 <!-- Card title -->
                                 <h2 class="text-white h1">
@@ -112,7 +112,7 @@
                                                 </div>
                                                 <span class="ms-3">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?username={{most_popular_posts.0.author.username}}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.0.author.username}}">
                                                         {{ most_popular_posts.0.author }}
                                                     </a>
                                                 </span>
@@ -141,7 +141,7 @@
                                     <div class="w-100 mt-auto">
                                         <!-- Card category -->
                                         <a class="badge {{ most_popular_posts.1.category.name|random_text_bg_color }}  mb-2 "
-                                           href="{% url 'post_list' %}?category={{most_popular_posts.1.category.name}}">
+                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.1.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
                                             {{ most_popular_posts.1.category.name }}
                                         </a>
@@ -157,7 +157,7 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?username={{most_popular_posts.1.author.username}}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.1.author.username}}">
                                                         {{ most_popular_posts.1.author }}
                                                     </a>
                                                 </div>
@@ -180,7 +180,7 @@
                                     <div class="w-100 mt-auto">
                                         <!-- Card category -->
                                         <a class="badge {{ most_popular_posts.2.category.name|random_text_bg_color }} mb-2"
-                                           href="{% url 'post_list' %}?category={{most_popular_posts.2.category.name}}">
+                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.2.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
                                             {{ most_popular_posts.2.category.name }}
                                         </a>
@@ -195,7 +195,7 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?username={{most_popular_posts.2.author.username}}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.2.author.username}}">
                                                         {{ third_most_popular_post.author }}
                                                     </a>
                                                 </div>
@@ -219,7 +219,7 @@
                                         <!-- Card category -->
                                         <a class="badge {{ most_popular_posts.3.category.name|random_text_bg_color }}
                                         mb-2"
-                                           href="{% url 'post_list' %}?category={{most_popular_posts.3.category.name}}">
+                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.3.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
                                             {{ most_popular_posts.3.category.name }}
                                         </a>
@@ -235,7 +235,7 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?username={{most_popular_posts.3.author.username}}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.3.author.username}}">
                                                         {{ most_popular_posts.3.author }}
                                                     </a>
                                                 </div>
@@ -287,7 +287,7 @@
                                 <div class="bg-dark-overlay-4 p-3">
                                     <a class="stretched-link btn-link fw-bold text-white h5 search-param"
                                        data-key="!{{ category }}"
-                                       href="{% url 'post_list' %}">
+                                       href="{% url 'post_list' %}?keyword=%21{{ category }}">
                                         {{ category }}
                                     </a>
                                 </div>
@@ -321,7 +321,7 @@
             <h5 class="mb-2 text-white">Hot topics</h5>
             <ul class="list-inline text-primary-hover lh-lg">
                 {% for tag in trending_tags %}
-                <li class="list-inline-item"><a href="{% url 'post_list' %}?tag={{tag}}">{{ tag }}</a></li>
+                <li class="list-inline-item"><a href="{% url 'post_list' %}?keyword=%23{{tag}}">{{ tag }}</a></li>
                 {% endfor %}
             </ul>
         </div>

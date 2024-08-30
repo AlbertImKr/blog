@@ -29,8 +29,9 @@ class HomeView(ListView):
             .annotate(post_count=Count("category"))
             .order_by("-post_count")[:5]
         )
-        trending_categories_name = [item["category__name"] for item
-                                    in trending_categories]
+        trending_categories_name = [
+            item["category__name"] for item in trending_categories
+        ]
         trending_tags = (
             posts.values("tags__name")
             .annotate(post_count=Count("tags"))
@@ -38,12 +39,14 @@ class HomeView(ListView):
             .order_by("-post_count")[:30]
         )
         trending_tags_name = [item["tags__name"] for item in trending_tags]
-        context.update({
-            "top_viewed_posts": posts[:3],
-            "most_popular_posts": posts[:4],
-            "trending_categories": trending_categories_name,
-            "trending_tags": trending_tags_name,
-        })
+        context.update(
+                {
+                    "top_viewed_posts": posts[:3],
+                    "most_popular_posts": posts[:4],
+                    "trending_categories": trending_categories_name,
+                    "trending_tags": trending_tags_name,
+                }
+        )
         return context
 
 
@@ -99,23 +102,23 @@ class PostListView(ListView):
 
     def get_queryset(self):
         queryset = Post.objects.all()
-
-        if "username" in self.request.GET:
-            user_name = self.request.GET["username"]
-            queryset = queryset.filter(author__username=user_name)
-        if "category" in self.request.GET:
-            category = self.request.GET["category"]
-            queryset = queryset.filter(category__name=category)
-        if "tag" in self.request.GET:
-            tag = self.request.GET["tag"]
-            queryset = queryset.filter(tags__name=tag)
-
+        keywords = self.request.GET.get("keyword", None)
+        keywords = keywords.split(",") if keywords else []
+        if keywords:
+            for keyword in keywords:
+                keyword = keyword.strip()
+                if keyword.startswith("@"):
+                    queryset = queryset.filter(author__username=keyword[1:])
+                elif keyword.startswith("!"):
+                    queryset = queryset.filter(category__name=keyword[1:])
+                elif keyword.startswith("#"):
+                    queryset = queryset.filter(tags__name=keyword[1:])
+                else:
+                    queryset = queryset.filter(title__icontains=keyword)
         return queryset.order_by(*self.ordering)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # 최근 카테고리와 최근 포스트 계산
         recent_categories = (
             self.get_queryset()
             .values("category__name")
@@ -126,19 +129,11 @@ class PostListView(ListView):
             item["category__name"] for item in recent_categories
         ]
         context["recent_posts"] = self.get_queryset().order_by("-created_at")[:5]
-
         keywords = []
-        # 추가적인 컨텍스트 설정
-        if "username" in self.request.GET:
-            keywords.append(f"@{self.request.GET['username']}")
-        if "category" in self.request.GET:
-            keywords.append(f"!{self.request.GET['category']}")
-        if "tag" in self.request.GET:
-            keywords.append(f"#{self.request.GET['tag']}")
-        if keywords:
-            context["keywords"] = keywords
-        else:
-            context["keywords"] = []
+        if "keyword" in self.request.GET:
+            keywords = [keyword.strip for keyword in
+                        self.request.GET["keyword"].split(",") if keyword]
+        context["keywords"] = keywords
         return context
 
 
@@ -180,8 +175,8 @@ def delete_post(request, pk):
     if request.user == post.author:
         post.delete()
         return JsonResponse(
-            {"status": "성공", "message": "삭제되었습니다."}, status=204
+                {"status": "성공", "message": "삭제되었습니다."}, status=204
         )
     return JsonResponse(
-        {"status": "실패", "message": "삭제 권한이 없습니다."}, status=403
+            {"status": "실패", "message": "삭제 권한이 없습니다."}, status=403
     )

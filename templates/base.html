@@ -240,9 +240,9 @@ Header START -->
                         <i class="bi bi-search fs-4"> </i>
                     </a>
                     <div aria-labelledby="navSearch" class="dropdown-menu dropdown-menu-end shadow rounded p-2">
-                        <form class="input-group">
+                        <form class="input-group" action="{% url 'post_list' %}">
                             <input aria-label="Search" class="form-control border-success" placeholder="Search"
-                                   type="search">
+                                   type="search" name="keyword">
                             <button class="btn btn-success m-0" type="submit">Search</button>
                         </form>
                     </div>

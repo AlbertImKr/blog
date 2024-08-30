@@ -29,7 +29,7 @@
                             <span class="ms-3">by
                                                     <a class="stretched-link text-reset btn-link search-param"
                                                        data-key="@{{ post.author.username }}"
-                                                       href="{% url 'post_list' %}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{ post.author.username }}">
                                                     {{ post.author.username }}
                                                 </a>
                                                 </span>

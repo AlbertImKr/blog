@@ -93,7 +93,6 @@
                 </div>
                 <!-- Main Post END -->
 
-
                 <!-- Sidebar START -->
                 <div class="col-lg-3 mt-5 mt-lg-0">
                     <div data-margin-top="80" data-sticky data-sticky-for="767">
@@ -108,7 +107,7 @@
                                 <div class="bg-dark-overlay-4 p-3">
                                     <a class="stretched-link btn-link fw-bold text-white h5 search-param"
                                        data-key="!{{ category }}"
-                                       href="{% url 'post_list' %}">
+                                       href="{% url 'post_list' %}?keyword=%21{{ category }}">
                                         {{ category }}
                                     </a>
                                 </div>

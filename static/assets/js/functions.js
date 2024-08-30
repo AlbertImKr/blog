@@ -29,9 +29,8 @@ Table Of Content
 19 DASHBOARD CHART
 20 TRAFFIC CHART
 21 RENDER DELTA USE QUILL
-22 AJAX POST LIST LOADING
+22 AJAX POSTS FRAGMENT LOADING
 23 AJAX DELETE POST
-24 CLICK SEARCH PARAMETER
 25 AJAX MORE POST LOADING
 ====================== */
 
@@ -110,9 +109,8 @@ var e = {
             e.trafficsourcesChart(),
             e.trafficstatsChart(),
             e.renderDeltaUseQuill(),
-            e.ajaxPostListLoading(),
+            e.ajaxPostsFragmentLoading(),
             e.ajaxDeletePost(),
-            e.clickSearchParameter(),
             e.ajaxMorePostLoading();
     },
     isVariableDefined: function (el) {
@@ -867,8 +865,8 @@ var e = {
         }
     },
     // END: Render Delta Use Quill
-    // START: 22 AJAX POST LIST LOADING
-    ajaxPostListLoading: function () {
+    // START: 22 AJAX POSTS FRAGMENT LOADING
+    ajaxPostsFragmentLoading: function () {
         const ajaxLinks = e.selectAll('.ajax-link');
         if (e.isVariableDefined(ajaxLinks)) {
             ajaxLinks.forEach(link => {
@@ -915,7 +913,7 @@ var e = {
                             }
                         }
                         container.innerHTML = data;
-                        e.ajaxPostListLoading();
+                        e.ajaxPostsFragmentLoading();
                     })
                     .catch(error => {
                         console.error(error)
@@ -925,7 +923,7 @@ var e = {
             });
         }
     },
-    // END: AJAX PARTIAL LOADING
+    // END: AJAX POSTS FRAGMENT LOADING
     // START: 23 AJAX DELETE POST
     ajaxDeletePost: function () {
         const deleteForms = e.selectAll('form.ajax-delete');
@@ -954,7 +952,7 @@ var e = {
                                 return response.text();
                             }).then(data => {
                                 container.innerHTML = data;
-                                e.ajaxPostListLoading();
+                                e.ajaxPostsFragmentLoading();
                             }).catch(error => {
                                 console.error(error);
                             });
@@ -967,29 +965,6 @@ var e = {
         }
     },
     // END: AJAX DELETE POST
-    // START: 24 CLICK SEARCH PARAMETER
-    clickSearchParameter: function () {
-        const searchParam = e.selectAll('.search-param');
-        if (e.isVariableDefined(searchParam)) {
-            searchParam.forEach(param => {
-                param.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    let url = param.getAttribute('href');
-                    const key = param.getAttribute('data-key');
-                    if (key.startsWith('@')) {
-                        url += `?username=${key.slice(1)}`;
-                    } else if (key.startsWith('#')) {
-                        url += `?tag=${key.slice(1)}`;
-                    } else if (key.startsWith('!')) {
-                        url += `?category=${key.slice(1)}`;
-                    }
-                    // url로 이동
-                    window.location.href = url;
-                });
-            });
-        }
-    },
-    // END: CLICK SEARCH PARAMETER
     // START: 25 AJAX MORE POST LOADING
     ajaxMorePostLoading: function () {
         const morePosts = e.select('.more-posts');
