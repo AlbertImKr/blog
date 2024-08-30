@@ -6,7 +6,7 @@
 
 
 <!-- Google Font -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.gstatic.com" rel="preconnect">
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
     rel="stylesheet">
@@ -50,13 +50,13 @@
                             </div>
                             <!-- Checkbox -->
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <input class="form-check-input" id="exampleCheck1" type="checkbox">
                                 <label class="form-check-label" for="exampleCheck1">keep me signed in</label>
                             </div>
                             <!-- Button -->
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
-                                    <button type="submit" class="btn btn-success">Sign me in</button>
+                                    <button class="btn btn-success" type="submit">Sign me in</button>
                                 </div>
                                 <div class="col-sm-8 text-sm-end">
                                     <span>Don't have an account? <a href="{% url 'signup' %}"><u>Sign up</u></a></span>

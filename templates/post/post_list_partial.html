@@ -5,14 +5,14 @@
 <div class="card mb-4">
     <div class="row">
         <div class="col-md-5">
-            <img class="rounded-3" src="{% static 'assets/images/blog/4by3/01.jpg' %}" alt="">
+            <img alt="" class="rounded-3" src="{% static 'assets/images/blog/4by3/01.jpg' %}">
         </div>
         <div class="col-md-7 mt-3 mt-md-0">
-            <a href="#" class="badge text-bg-danger mb-2"><i
+            <a class="badge text-bg-danger mb-2" href="#"><i
                 class="fas fa-circle me-2 small fw-bold"></i>{{ post.category }}</a>
             <h3>
-                <a href="{% url 'post_detail' post.pk %}"
-                   class="btn-link stretched-link text-reset">
+                <a class="btn-link stretched-link text-reset"
+                   href="{% url 'post_detail' post.pk %}">
                     {{ post.title }}
                 </a>
             </h3>
@@ -23,13 +23,13 @@
                     <div class="nav-link">
                         <div class="d-flex align-items-center position-relative">
                             <div class="avatar avatar-xs">
-                                <img class="avatar-img rounded-circle"
-                                     src="assets/images/avatar/01.jpg" alt="avatar">
+                                <img alt="avatar"
+                                     class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg">
                             </div>
                             <span class="ms-3">by
-                                                    <a href="{% url 'post_list' %}"
-                                                       class="stretched-link text-reset btn-link search-param"
-                                                       data-key="@{{ post.author.username }}">
+                                                    <a class="stretched-link text-reset btn-link search-param"
+                                                       data-key="@{{ post.author.username }}"
+                                                       href="{% url 'post_list' %}">
                                                     {{ post.author.username }}
                                                 </a>
                                                 </span>
@@ -49,16 +49,16 @@
 </div>
 {% endif %}
 <!-- Pagination START -->
-<nav class="my-5" aria-label="navigation">
+<nav aria-label="navigation" class="my-5">
     <ul class="pagination d-inline-block d-md-flex justify-content-center">
         {% if page_obj.has_previous %}
         <li class="page-item">
             <a class="page-link ajax-link"
-               href="{% url 'post_list' %}?page={{ page_obj.previous_page_number }}" data-target="#post-list">Prev</a>
+               data-target="#post-list" href="{% url 'post_list' %}?page={{ page_obj.previous_page_number }}">Prev</a>
         </li>
         {% else %}
         <li class="page-item disabled">
-            <span class="page-link" tabindex="-1" aria-disabled="true">Prev</span>
+            <span aria-disabled="true" class="page-link" tabindex="-1">Prev</span>
         </li>
         {% endif %}
         {% if page_obj.number > 2 %}
@@ -76,8 +76,9 @@
             {{ page_obj.number }}</a></li>
         {% if page_obj.number < page_obj.paginator.num_pages %}
         <li class="page-item">
-            <a class="page-link ajax-link" data-target="#post-list" href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:1 }}">
-            {{ page_obj.number|add:1 }}
+            <a class="page-link ajax-link" data-target="#post-list"
+               href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:1 }}">
+                {{ page_obj.number|add:1 }}
             </a>
         </li>
         {% endif %}
@@ -88,12 +89,12 @@
         {% endif %}
         {% if page_obj.has_next %}
         <li class="page-item">
-            <a class="page-link ajax-link" href="{% url 'post_list_partial' %}?page={{ page_obj.next_page_number }}"
-               data-target="#post-list">Next</a>
+            <a class="page-link ajax-link" data-target="#post-list"
+               href="{% url 'post_list_partial' %}?page={{ page_obj.next_page_number }}">Next</a>
         </li>
         {% else %}
         <li class="page-item disabled">
-            <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
+            <span aria-disabled="true" class="page-link" tabindex="-1">Next</span>
         </li>
         {% endif %}
     </ul>

@@ -9,11 +9,13 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=True)
-    tags = models.ManyToManyField('Tag', related_name='posts', blank=True)
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE,
-                               related_name='posts')
-    category = models.ForeignKey('Category', on_delete=models.CASCADE,
-                                 related_name='posts')
+    tags = models.ManyToManyField("Tag", related_name="posts", blank=True)
+    author = models.ForeignKey(
+        "auth.User", on_delete=models.CASCADE, related_name="posts"
+    )
+    category = models.ForeignKey(
+        "Category", on_delete=models.CASCADE, related_name="posts"
+    )
 
     def __str__(self):
         return self.title

@@ -6,7 +6,7 @@
 
     <!-- Meta Tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Dark mode -->
     <script>
@@ -72,14 +72,14 @@
 </head>
 <body>
 <!-- Offcanvas START -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu">
+<div class="offcanvas offcanvas-end" id="offcanvasMenu" tabindex="-1">
     <div class="offcanvas-header justify-content-end">
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button aria-label="Close" class="btn-close text-reset" data-bs-dismiss="offcanvas" type="button"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column pt-0">
         <div>
-            <img class="light-mode-item my-3" src="{% static 'assets/images/logo.svg' %}" alt="logo">
-            <img class="dark-mode-item my-3" src="{% static 'assets/images/logo-light.svg' %}" alt="logo">
+            <img alt="logo" class="light-mode-item my-3" src="{% static 'assets/images/logo.svg' %}">
+            <img alt="logo" class="dark-mode-item my-3" src="{% static 'assets/images/logo-light.svg' %}">
             <p>매일 조금씩 성장하고 즐겁게 코딩하자!!</p>
             <!-- Nav START -->
             <ul class="nav d-block flex-column my-4">
@@ -112,16 +112,16 @@ Header START -->
         <div class="container">
             <!-- Logo START -->
             <a class="navbar-brand" href="{% url 'home' %}">
-                <img class="navbar-brand-item light-mode-item" src="{% static '/assets/images/logo.svg' %}" alt="logo">
-                <img class="navbar-brand-item dark-mode-item" src="{% static 'assets/images/logo-light.svg' %}"
-                     alt="logo">
+                <img alt="logo" class="navbar-brand-item light-mode-item" src="{% static '/assets/images/logo.svg' %}">
+                <img alt="logo" class="navbar-brand-item dark-mode-item"
+                     src="{% static 'assets/images/logo-light.svg' %}">
             </a>
             <!-- Logo END -->
 
             <!-- Responsive navbar toggler -->
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler ms-auto" data-bs-target="#navbarCollapse" data-bs-toggle="collapse"
+                    type="button">
                 <span class="text-body h6 d-none d-sm-inline-block">Menu</span>
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -137,37 +137,38 @@ Header START -->
                         <a class="nav-link" href="{% url 'user_manage' %}"><i class="bi bi-toggles me-1"></i>manage</a>
                     </li>
                     {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-at-fill me-1"></i>Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i
+                        class="bi bi-envelope-at-fill me-1"></i>Contact</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <!-- Font size accessibility START -->
-                    <div class="btn-group me-3" role="group" aria-label="font size changer">
-                        <input type="radio" class="btn-check" name="fntradio" id="font-sm">
+                    <div aria-label="font size changer" class="btn-group me-3" role="group">
+                        <input class="btn-check" id="font-sm" name="fntradio" type="radio">
                         <label class="btn btn-xs btn-outline-primary mb-0" for="font-sm">A-</label>
 
-                        <input type="radio" class="btn-check" name="fntradio" id="font-default" checked>
+                        <input checked class="btn-check" id="font-default" name="fntradio" type="radio">
                         <label class="btn btn-xs btn-outline-primary mb-0" for="font-default">A</label>
 
-                        <input type="radio" class="btn-check" name="fntradio" id="font-lg">
+                        <input class="btn-check" id="font-lg" name="fntradio" type="radio">
                         <label class="btn btn-xs btn-outline-primary mb-0" for="font-lg">A+</label>
                     </div>
 
                     <!-- Dark mode options START -->
                     <div class="nav-item dropdown mx-2">
                         <!-- Switch button -->
-                        <button class="modeswitch" id="bd-theme" type="button" aria-expanded="false"
-                                data-bs-toggle="dropdown" data-bs-display="static">
+                        <button aria-expanded="false" class="modeswitch" data-bs-display="static" data-bs-toggle="dropdown"
+                                id="bd-theme" type="button">
                             <svg class="theme-icon-active">
                                 <use href="#"></use>
                             </svg>
                         </button>
                         <!-- Dropdown items -->
-                        <ul class="dropdown-menu min-w-auto dropdown-menu-end" aria-labelledby="bd-theme">
+                        <ul aria-labelledby="bd-theme" class="dropdown-menu min-w-auto dropdown-menu-end">
                             <li class="mb-1">
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                        data-bs-theme-value="light">
-                                    <svg width="16" height="16" fill="currentColor"
-                                         class="bi bi-brightness-high-fill fa-fw mode-switch me-1" viewBox="0 0 16 16">
+                                <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+                                        type="button">
+                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch me-1" fill="currentColor" height="16"
+                                         viewBox="0 0 16 16" width="16">
                                         <path
                                             d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
                                         <use href="#"></use>
@@ -176,10 +177,10 @@ Header START -->
                                 </button>
                             </li>
                             <li class="mb-1">
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                        data-bs-theme-value="dark">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-moon-stars-fill fa-fw mode-switch me-1" viewBox="0 0 16 16">
+                                <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                                        type="button">
+                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch me-1" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                         width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
                                         <path
@@ -190,10 +191,10 @@ Header START -->
                                 </button>
                             </li>
                             <li>
-                                <button type="button" class="dropdown-item d-flex align-items-center active"
-                                        data-bs-theme-value="auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-circle-half fa-fw mode-switch me-1" viewBox="0 0 16 16">
+                                <button class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+                                        type="button">
+                                    <svg class="bi bi-circle-half fa-fw mode-switch me-1" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                         width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                         <use href="#"></use>
                                     </svg>
@@ -223,14 +224,14 @@ Header START -->
             <div class="nav flex-nowrap align-items-center">
                 <!-- Nav Search -->
                 <div class="nav-item dropdown dropdown-toggle-icon-none nav-search">
-                    <a class="nav-link dropdown-toggle" role="button" href="#" id="navSearch" data-bs-toggle="dropdown"
-                       aria-expanded="false">
+                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navSearch"
+                       role="button">
                         <i class="bi bi-search fs-4"> </i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end shadow rounded p-2" aria-labelledby="navSearch">
+                    <div aria-labelledby="navSearch" class="dropdown-menu dropdown-menu-end shadow rounded p-2">
                         <form class="input-group">
-                            <input class="form-control border-success" type="search" placeholder="Search"
-                                   aria-label="Search">
+                            <input aria-label="Search" class="form-control border-success" placeholder="Search"
+                                   type="search">
                             <button class="btn btn-success m-0" type="submit">Search</button>
                         </form>
                     </div>
@@ -238,8 +239,8 @@ Header START -->
                 <!-- Offcanvas menu toggler -->
                 {% if not user.is_authenticated %}
                 <div class="nav-item">
-                    <a class="nav-link p-0" data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button"
-                       aria-controls="offcanvasMenu">
+                    <a aria-controls="offcanvasMenu" class="nav-link p-0" data-bs-toggle="offcanvas" href="#offcanvasMenu"
+                       role="button">
                         <i class="bi bi-text-right rtl-flip fs-2" data-bs-target="#offcanvasMenu"> </i>
                     </a>
                 </div>
@@ -250,21 +251,22 @@ Header START -->
             <!-- Profile dropdown START -->
             <div class="nav-item ms-2 ms-md-3 dropdown">
                 <!-- Avatar -->
-                <a class="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside"
-                   data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/01.jpg'%}" alt="avatar">
+                <a aria-expanded="false" class="avatar avatar-sm p-0" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
+                   href="#" id="profileDropdown" role="button">
+                    <img alt="avatar" class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/01.jpg'%}">
                 </a>
 
                 <!-- Profile dropdown START -->
-                <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
-                    aria-labelledby="profileDropdown">
+                <ul aria-labelledby="profileDropdown"
+                    class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3">
                     <!-- Profile info -->
                     <li class="px-3">
                         <div class="d-flex align-items-center">
                             <!-- Avatar -->
                             <div class="avatar me-3">
-                                <img class="avatar-img rounded-circle shadow" src="{% static 'assets/images/avatar/01.jpg'%}"
-                                     alt="avatar">
+                                <img alt="avatar"
+                                     class="avatar-img rounded-circle shadow"
+                                     src="{% static 'assets/images/avatar/01.jpg'%}">
                             </div>
                             <div>
                                 <a class="h6 mt-2 mt-sm-0" href="#">{{ user.username }}</a>
@@ -280,7 +282,7 @@ Header START -->
                     <li>
                         <form action="{% url 'signout' %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="dropdown-item">
+                            <button class="dropdown-item" type="submit">
                                 <i class="bi bi-power fa-fw me-2"></i>Sign Out
                             </button>
                         </form>
@@ -289,18 +291,18 @@ Header START -->
                     <li>
                         <div class="align-items-center text-center py-0">
                             <span class="me-3">mode:</span>
-                            <div class="btn-group theme-icon-active" role="group" aria-label="Default button group">
-                                <button type="button" class="btn btn-light btn-sm mb-0" data-bs-theme-value="light">
-                                    <svg width="16" height="16" fill="currentColor"
-                                         class="bi bi-brightness-high-fill fa-fw mode-switch" viewBox="0 0 16 16">
+                            <div aria-label="Default button group" class="btn-group theme-icon-active" role="group">
+                                <button class="btn btn-light btn-sm mb-0" data-bs-theme-value="light" type="button">
+                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch" fill="currentColor" height="16"
+                                         viewBox="0 0 16 16" width="16">
                                         <path
                                             d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
                                         <use href="#"></use>
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-light btn-sm mb-0" data-bs-theme-value="dark">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-moon-stars-fill fa-fw mode-switch" viewBox="0 0 16 16">
+                                <button class="btn btn-light btn-sm mb-0" data-bs-theme-value="dark" type="button">
+                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                         width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
                                         <path
@@ -308,10 +310,10 @@ Header START -->
                                         <use href="#"></use>
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-light btn-sm mb-0 active"
-                                        data-bs-theme-value="auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-circle-half fa-fw mode-switch" viewBox="0 0 16 16">
+                                <button class="btn btn-light btn-sm mb-0 active" data-bs-theme-value="auto"
+                                        type="button">
+                                    <svg class="bi bi-circle-half fa-fw mode-switch" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                         width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                         <use href="#"></use>
                                     </svg>
@@ -324,7 +326,7 @@ Header START -->
             </div>
             {% else %}
             <div class="nav-item d-none d-md-block">
-                <a href="{% url 'signin' %}" class="btn btn-sm btn-danger mb-0 mx-2">Login</a>
+                <a class="btn btn-sm btn-danger mb-0 mx-2" href="{% url 'signin' %}">Login</a>
             </div>
             {% endif %}
             <!-- Profile dropdown END -->

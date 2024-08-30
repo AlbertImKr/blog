@@ -46,7 +46,7 @@
                         <!-- Card body -->
                         <div class="card-body">
                             <!-- Form START -->
-                            <form method="post" href="{% url 'post_create' %}">
+                            <form href="{% url 'post_create' %}" method="post">
                                 {% csrf_token %}
                                 <!-- Main form -->
                                 <div class="row">

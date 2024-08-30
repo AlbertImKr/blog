@@ -46,7 +46,7 @@
                         <!-- Card body -->
                         <div class="card-body">
                             <!-- Form START -->
-                            <form method="post" href="{% url 'post_update' form.instance.pk %}">
+                            <form href="{% url 'post_update' form.instance.pk %}" method="post">
                                 {% csrf_token %}
                                 <!-- Main form -->
                                 <div class="row">
@@ -143,7 +143,8 @@
                                         <!-- Tags -->
                                         <div class="mb-3">
                                             <label class="form-label">Tags</label>
-                                            <textarea class="form-control" rows="1" placeholder="business, sports ..." name="tags">{{ post.tags.all|join:", " }}</textarea>
+                                            <textarea class="form-control" name="tags" placeholder="business, sports ..."
+                                                      rows="1">{{ post.tags.all|join:", " }}</textarea>
                                             <small>Maximum of 14 keywords. Keywords should all be in lowercase and
                                                 separated by commas. e.g. javascript, react, marketing.</small>
                                         </div>

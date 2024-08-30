@@ -14,87 +14,98 @@ from .forms import UserSignupForm
 class SignupView(View):
     def get(self, request):
         form = UserSignupForm()
-        return render(request, 'user/signup.html',
-                      {'form': form})
+        return render(request, "user/signup.html", {"form": form})
 
     def post(self, request):
         form = UserSignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
-        return render(request, 'user/signup.html',
-                      {'error': form.errors, 'form': form})
+            return redirect("home")
+        return render(request, "user/signup.html", {"error": form.errors, "form": form})
 
 
 class SignInView(View):
     form_class = UserSigninForm
-    template_name = 'user/signin.html'
+    template_name = "user/signin.html"
 
     def get(self, request):
-        return render(request, self.template_name, {'form': self.form_class()})
+        return render(request, self.template_name, {"form": self.form_class()})
 
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password"]
             user = User.objects.get(email=email)
             if user.check_password(password):
                 login(request, user)
-                if 'next' in request.GET:
-                    return redirect(request.GET['next'])
-                return redirect('home')
+                if "next" in request.GET:
+                    return redirect(request.GET["next"])
+                return redirect("home")
             else:
-                return render(request, self.template_name,
-                              {'form': form,
-                               'error': '이메일 또는 비밀번호가 일치하지 않습니다.'})
-        return render(request, self.template_name,
-                      {'form': form, 'error': form.errors})
+                return render(
+                    request,
+                    self.template_name,
+                    {
+                        "form": form,
+                        "error": "이메일 또는 비밀번호가 일치하지 않습니다.",
+                    },
+                )
+        return render(request, self.template_name, {"form": form, "error": form.errors})
 
 
 class SignOutView(View):
     def post(self, request):
         logout(request)
-        return redirect('home')
+        return redirect("home")
 
 
 class UserPostListView(LoginRequiredMixin, View):
-    template_name = 'user/posts.html'
+    template_name = "user/posts.html"
 
     def get(self, request):
         posts = self.request.user.posts.all()
 
         paginator = Paginator(posts, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        return render(request, self.template_name, {'page_obj': page_obj,
-                                                    'total_posts': posts.count})
+        return render(
+            request,
+            self.template_name,
+            {"page_obj": page_obj, "total_posts": posts.count},
+        )
 
 
 class UserManageView(LoginRequiredMixin, View):
-    template_name = 'user/manage.html'
+    template_name = "user/manage.html"
 
     def get(self, request):
         posts = self.request.user.posts.all()
 
         paginator = Paginator(posts, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        return render(request, self.template_name, {'page_obj': page_obj,
-                                                    'total_posts': posts.count})
+        return render(
+            request,
+            self.template_name,
+            {"page_obj": page_obj, "total_posts": posts.count},
+        )
 
 
 class UserPostListPartialView(LoginRequiredMixin, View):
-    template_name = 'user/post_list.html'
+    template_name = "user/post_list.html"
 
     def get(self, request):
-        posts = self.request.user.posts.all().order_by('-created_at')
+        posts = self.request.user.posts.all().order_by("-created_at")
 
         paginator = Paginator(posts, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        return render(request, self.template_name, {'page_obj': page_obj,
-                                                    'total_posts': posts.count})
+        return render(
+            request,
+            self.template_name,
+            {"page_obj": page_obj, "total_posts": posts.count},
+        )

@@ -6,7 +6,7 @@
 <link href="{% static 'assets/images/favicon.ico' %}" rel="shortcut icon">
 
 <!-- Google Font -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.gstatic.com" rel="preconnect">
 <link
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
     rel="stylesheet">
@@ -35,19 +35,19 @@
                     <div class="bg-primary bg-opacity-10 rounded p-4 p-sm-5">
                         <h2>Create your free account </h2>
                         <!-- Form START -->
-                        <form class="mt-4" method="post" action="{% url 'signup' %}">
+                        <form action="{% url 'signup' %}" class="mt-4" method="post">
                             {% csrf_token %}
                             <!-- Username -->
                             <div class="mb-3">
                                 <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
                                 {{ form.username }}
-                                <small id="usernameHelp" class="form-text">Your username will be public</small>
+                                <small class="form-text" id="usernameHelp">Your username will be public</small>
                             </div>
                             <!-- Email -->
                             <div class="mb-3">
                                 <label class="form-label" for="{{ form.email.id_for_label }}">Email address</label>
                                 {{ form.email }}
-                                <small id="emailHelp" class="form-text">We'll never share your email with anyone
+                                <small class="form-text" id="emailHelp">We'll never share your email with anyone
                                     else.</small>
                             </div>
                             <!-- Password -->
@@ -57,13 +57,14 @@
                             </div>
                             <!-- Password -->
                             <div class="mb-3">
-                                <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                                <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm
+                                    Password</label>
                                 {{ form.password2 }}
                             </div>
                             <!-- Button -->
                             <div class="row align-items-center">
                                 <div class="col-sm-4">
-                                    <button type="submit" class="btn btn-success" aria-describedby="signupHelp">Sign me
+                                    <button aria-describedby="signupHelp" class="btn btn-success" type="submit">Sign me
                                         up
                                     </button>
                                 </div>
