@@ -34,35 +34,7 @@
     <section class="py-2">
         <div class="container">
             <div class="row g-0">
-                <div class="col-12 bg-primary bg-opacity-10 p-2 rounded">
-                    <div class="d-sm-flex align-items-center text-center text-sm-start">
-                        <!-- Title -->
-                        <div class="me-3">
-                            <span class="badge bg-primary p-2 px-3">Trending:</span>
-                        </div>
-                        <!-- Slider -->
-                        <div class="tiny-slider arrow-end arrow-xs arrow-white arrow-round arrow-md-none flex-grow-1">
-                            <div class="tiny-slider-inner"
-                                 data-arrow="true"
-                                 data-autoplay="true"
-                                 data-dots="false"
-                                 data-gutter="0"
-                                 data-hoverpause="true"
-                                 data-items="1">
-                                <!-- Slider items -->
-                                {% for post in top_viewed_posts %}
-                                <div>
-                                    <a class="text-reset btn-link" href="{% url 'post_detail' post.pk %}">
-                                        {{ post.title }}
-                                    </a>
-                                </div>
-                                {% empty %}
-                                <div>No trending posts</div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div> <!-- Row END -->
         </div>
     </section>
@@ -73,6 +45,7 @@
     <section class="pt-4 pb-0 card-grid">
         <div class="container">
             <div class="row g-4">
+                <h2 class="text-warning opacity-75"><i class="bi bi-star-fill me-2"></i>Top Viewed Posts</h2>
                 <!-- Left big card -->
                 <div class="col-lg-6">
                     <div class="card card-overlay-bottom card-grid-lg card-bg-scale"
@@ -83,21 +56,21 @@
                         <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
                             <div class="w-100 mt-auto">
                                 <!-- Card category -->
-                                <a class="badge {{ most_popular_posts.0.category.name|random_text_bg_color }} mb-2"
-                                   href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.0.category.name}}">
-                                    <i class="fas fa-circle me-2 small fw-bold"></i>{{ most_popular_posts.0.category }}</a>
+                                <a class="badge {{ top_viewed_posts.0.category.name|random_text_bg_color }} mb-2"
+                                   href="{% url 'post_list' %}?keyword=%21{{top_viewed_posts.0.category.name}}">
+                                    <i class="fas fa-circle me-2 small fw-bold"></i>{{ top_viewed_posts.0.category }}</a>
                                 <!-- Card title -->
                                 <h2 class="text-white h1">
                                     <a class="btn-link stretched-link text-reset"
-                                       href="{% url 'post_detail' most_popular_posts.0.pk %}">
-                                        {{ most_popular_posts.0.title }}
+                                       href="{% url 'post_detail' top_viewed_posts.0.pk %}">
+                                        {{ top_viewed_posts.0.title }}
                                     </a>
                                 </h2>
                                 <p class="text-white">
-                                    {% if most_popular_posts.0.description|length > 100 %}
-                                    {{ most_popular_posts.0.description|slice:":100" }}...
+                                    {% if top_viewed_posts.0.description|length > 100 %}
+                                    {{ top_viewed_posts.0.description|slice:":100" }}...
                                     {% else %}
-                                    {{ most_popular_posts.0.description }}
+                                    {{ top_viewed_posts.0.description }}
                                     {% endif %}
                                 </p>
                                 <!-- Card info -->
@@ -112,15 +85,15 @@
                                                 </div>
                                                 <span class="ms-3">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.0.author.username}}">
-                                                        {{ most_popular_posts.0.author }}
+                                                       href="{% url 'post_list' %}?keyword=%40{{top_viewed_posts.0.author.username}}">
+                                                        {{ top_viewed_posts.0.author }}
                                                     </a>
                                                 </span>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="nav-item">
-                                        {{ most_popular_posts.0.created_at|date:"M d, Y" }}
+                                        {{ top_viewed_posts.0.created_at|date:"M d, Y" }}
                                     </li>
                                     <li class="nav-item">5 min read</li>
                                 </ul>
@@ -140,16 +113,16 @@
                                 <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
                                     <div class="w-100 mt-auto">
                                         <!-- Card category -->
-                                        <a class="badge {{ most_popular_posts.1.category.name|random_text_bg_color }}  mb-2 "
-                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.1.category.name}}">
+                                        <a class="badge {{ top_viewed_posts.1.category.name|random_text_bg_color }}  mb-2 "
+                                           href="{% url 'post_list' %}?keyword=%21{{top_viewed_posts.1.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
-                                            {{ most_popular_posts.1.category.name }}
+                                            {{ top_viewed_posts.1.category.name }}
                                         </a>
                                         <!-- Card title -->
                                         <h4 class="text-white">
                                             <a class="btn-link stretched-link text-reset"
-                                               href="{% url 'post_detail' most_popular_posts.1.pk %}">
-                                                {{ most_popular_posts.1.title }}
+                                               href="{% url 'post_detail' top_viewed_posts.1.pk %}">
+                                                {{ top_viewed_posts.1.title }}
                                             </a>
                                         </h4>
                                         <!-- Card info -->
@@ -157,13 +130,13 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.1.author.username}}">
-                                                        {{ most_popular_posts.1.author }}
+                                                       href="{% url 'post_list' %}?keyword=%40{{top_viewed_posts.1.author.username}}">
+                                                        {{ top_viewed_posts.1.author }}
                                                     </a>
                                                 </div>
                                             </li>
                                             <li class="nav-item">
-                                                {{ most_popular_posts.1.created_at|date:"M d, Y" }}
+                                                {{ top_viewed_posts.1.created_at|date:"M d, Y" }}
                                             </li>
                                         </ul>
                                     </div>
@@ -179,15 +152,15 @@
                                 <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
                                     <div class="w-100 mt-auto">
                                         <!-- Card category -->
-                                        <a class="badge {{ most_popular_posts.2.category.name|random_text_bg_color }} mb-2"
-                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.2.category.name}}">
+                                        <a class="badge {{ top_viewed_posts.2.category.name|random_text_bg_color }} mb-2"
+                                           href="{% url 'post_list' %}?keyword=%21{{top_viewed_posts.2.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
-                                            {{ most_popular_posts.2.category.name }}
+                                            {{ top_viewed_posts.2.category.name }}
                                         </a>
                                         <!-- Card title -->
                                         <h4 class="text-white"><a
                                             class="btn-link stretched-link text-reset"
-                                            href="{% url 'post_detail' most_popular_posts.2.pk %}">
+                                            href="{% url 'post_detail' top_viewed_posts.2.pk %}">
                                             {{ third_most_popular_post.title }}
                                         </a></h4>
                                         <!-- Card info -->
@@ -195,13 +168,13 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.2.author.username}}">
+                                                       href="{% url 'post_list' %}?keyword=%40{{top_viewed_posts.2.author.username}}">
                                                         {{ third_most_popular_post.author }}
                                                     </a>
                                                 </div>
                                             </li>
                                             <li class="nav-item">
-                                                {{ most_popular_posts.2.created_at|date:"M d, Y" }}
+                                                {{ top_viewed_posts.2.created_at|date:"M d, Y" }}
                                             </li>
                                         </ul>
                                     </div>
@@ -217,17 +190,17 @@
                                 <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
                                     <div class="w-100 mt-auto">
                                         <!-- Card category -->
-                                        <a class="badge {{ most_popular_posts.3.category.name|random_text_bg_color }}
+                                        <a class="badge {{ top_viewed_posts.3.category.name|random_text_bg_color }}
                                         mb-2"
-                                           href="{% url 'post_list' %}?keyword=%21{{most_popular_posts.3.category.name}}">
+                                           href="{% url 'post_list' %}?keyword=%21{{top_viewed_posts.3.category.name}}">
                                             <i class="fas fa-circle me-2 small fw-bold"></i>
-                                            {{ most_popular_posts.3.category.name }}
+                                            {{ top_viewed_posts.3.category.name }}
                                         </a>
                                         <!-- Card title -->
                                         <h4 class="text-white">
                                             <a class="btn-link stretched-link text-reset"
-                                               href="{% url 'post_detail' most_popular_posts.3.pk %}">
-                                                {{ most_popular_posts.3.title }}
+                                               href="{% url 'post_detail' top_viewed_posts.3.pk %}">
+                                                {{ top_viewed_posts.3.title }}
                                             </a>
                                         </h4>
                                         <!-- Card info -->
@@ -235,13 +208,13 @@
                                             <li class="nav-item position-relative">
                                                 <div class="nav-link">by
                                                     <a class="stretched-link text-reset btn-link"
-                                                       href="{% url 'post_list' %}?keyword=%40{{most_popular_posts.3.author.username}}">
-                                                        {{ most_popular_posts.3.author }}
+                                                       href="{% url 'post_list' %}?keyword=%40{{top_viewed_posts.3.author.username}}">
+                                                        {{ top_viewed_posts.3.author }}
                                                     </a>
                                                 </div>
                                             </li>
                                             <li class="nav-item">
-                                                {{ most_popular_posts.3.created_at|date:"M d, Y" }}
+                                                {{ top_viewed_posts.3.created_at|date:"M d, Y" }}
                                             </li>
                                         </ul>
                                     </div>

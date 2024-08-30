@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load category_filters %}
 {% load static %}
 {% block css %}
 
@@ -226,26 +226,12 @@
                         <div class="row g-2">
                             <h5>Categories</h5>
                             {% for category in categories %}
-                            <div
-                                class="d-flex justify-content-between align-items-center bg-warning bg-opacity-15 rounded p-2 position-relative">
-                                {% if forloop.counter == 1 %}
-                                <h6 class="m-0 text-warning">{{ category.name }}</h6>
-                                <a class="badge bg-warning text-dark stretched-link" href="#">
+                            <div class="d-flex justify-content-between align-items-center
+                            {{ category.name|random_text_bg_color }} bg-opacity-15 rounded p-2 position-relative">
+                                <h6 class="m-0 {{ category.name|random_text_color }}">{{ category.name }}</h6>
+                                <a class="badge {{ category.name|random_text_bg_color }} text-dark stretched-link" href="#">
                                     {{ category.post_count }}
                                 </a>
-                                {% elif forloop.counter == 2 %}
-                                <h6 class="m-0 text-info">{{ category.name }}</h6>
-                                <a class="badge bg-info stretched-link" href="#">{{ category.post_count }}</a>
-                                {% elif forloop.counter == 3 %}
-                                <a class="badge bg-danger stretched-link" href="#">{{ category.post_count }}</a>
-                                <h6 class="m-0 text-danger">{{ category.name }}</h6>
-                                {% elif forloop.counter == 4 %}
-                                <h6 class="m-0 text-primary">{{ category.name }}</h6>
-                                <a class="badge bg-primary stretched-link" href="#">{{ category.post_count }}</a>
-                                {% elif forloop.counter == 5 %}
-                                <h6 class="m-0 text-success">{{ category.name }}</h6>
-                                <a class="badge bg-success stretched-link" href="#">{{ category.post_count }}</a>
-                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>

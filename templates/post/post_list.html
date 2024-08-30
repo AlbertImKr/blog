@@ -98,10 +98,10 @@
                     <div data-margin-top="80" data-sticky data-sticky-for="767">
                         <!-- Trending topics widget START -->
                         <div>
-                            <h4 class="mb-3">Recent Categories</h4>
+                            <h4 class="mb-3">Trending Categories</h4>
                             <!-- Category item -->
-                            {% if recent_categories %}
-                            {% for category in recent_categories %}
+                            {% if trending_categories %}
+                            {% for category in trending_categories %}
                             <div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded
                             {{ category|random_text_bg_color }}">
                                 <div class="bg-dark-overlay-4 p-3">
@@ -115,7 +115,7 @@
                             {% endfor %}
                             {% else %}
                             <div class="alert alert-danger" role="alert">
-                                No recent category found!
+                                No trending category found!
                             </div>
                             {% endif %}
                         </div>
@@ -124,9 +124,9 @@
                         <div class="row">
                             <!-- Recent post widget START -->
                             <div class="col-12 col-sm-6 col-lg-12">
-                                <h4 class="mt-4 mb-3">Recent post</h4>
-                                {% if recent_posts %}
-                                {% for post in recent_posts %}
+                                <h4 class="mt-4 mb-3">Trending post</h4>
+                                {% if trending_posts %}
+                                {% for post in trending_posts %}
                                 <!-- Recent post item -->
                                 <div class="card mb-3">
                                     <div class="row g-3">
@@ -147,7 +147,7 @@
                                 {% endfor %}
                                 {% else %}
                                 <div class="alert alert-warning" role="alert">
-                                    No recent post found!
+                                    No post found!
                                 </div>
                                 {% endif %}
                             </div>
