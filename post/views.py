@@ -3,39 +3,48 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
-from django.views.generic import View
 
 from .forms import PostCreateForm
 from .models import Category
 from .models import Post
 
 
-class HomeView(View):
+class HomeView(ListView):
+    model = Post
     template_name = "post/index.html"
+    context_object_name = "latest_posts"
+    paginate_by = 10
+    ordering = ["-created_at"]
 
-    def get(self, request, *args, **kwargs):
-        latest_posts = Post.objects.all().order_by("-created_at")[:10]
-        top_viewed_posts = Post.objects.all().order_by("-created_at")[:3]
-        most_popular_posts = Post.objects.all().order_by("-created_at")[:4]
-
-        # 컨텍스트 데이터
-        context = {
-            "latest_posts": latest_posts,
-            "top_viewed_posts": top_viewed_posts,
-            "most_popular_post": most_popular_posts[0],
-            "second_most_popular_post": most_popular_posts[1],
-            "third_most_popular_post": most_popular_posts[2],
-            "fourth_most_popular_post": most_popular_posts[3],
-        }
-
-        # 렌더링 및 응답 반환
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = Post.objects.all().order_by("-created_at")
+        trending_categories = (
+            posts.values("category__name")
+            .annotate(post_count=Count("category"))
+            .order_by("-post_count")[:5]
+        )
+        trending_categories_name = [item["category__name"] for item
+                                    in trending_categories]
+        trending_tags = (
+            posts.values("tags__name")
+            .annotate(post_count=Count("tags"))
+            .filter(post_count__gte=1)
+            .order_by("-post_count")[:30]
+        )
+        trending_tags_name = [item["tags__name"] for item in trending_tags]
+        context.update({
+            "top_viewed_posts": posts[:3],
+            "most_popular_posts": posts[:4],
+            "trending_categories": trending_categories_name,
+            "trending_tags": trending_tags_name,
+        })
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
