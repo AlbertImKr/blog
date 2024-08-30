@@ -1,0 +1,103 @@
+{% load static %}
+{% if posts %}
+{% for post in posts %}
+<!-- Card item START -->
+<div class="card mb-4">
+    <div class="row">
+        <div class="col-md-5">
+            <img class="rounded-3" src="{% static 'assets/images/blog/4by3/01.jpg' %}" alt="">
+        </div>
+        <div class="col-md-7 mt-3 mt-md-0">
+            <a href="#" class="badge text-bg-danger mb-2"><i
+                class="fas fa-circle me-2 small fw-bold"></i>{{ post.category }}</a>
+            <h3>
+                <a href="{% url 'post_detail' post.pk %}"
+                   class="btn-link stretched-link text-reset">
+                    {{ post.title }}
+                </a>
+            </h3>
+            <p>{{ post.description }}</p>
+            <!-- Card info -->
+            <ul class="nav nav-divider align-items-center d-none d-sm-inline-block">
+                <li class="nav-item">
+                    <div class="nav-link">
+                        <div class="d-flex align-items-center position-relative">
+                            <div class="avatar avatar-xs">
+                                <img class="avatar-img rounded-circle"
+                                     src="assets/images/avatar/01.jpg" alt="avatar">
+                            </div>
+                            <span class="ms-3">by
+                                                    <a href="{% url 'post_list' %}"
+                                                       class="stretched-link text-reset btn-link search-param"
+                                                       data-key="@{{ post.author.username }}">
+                                                    {{ post.author.username }}
+                                                </a>
+                                                </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">{{ post.created_at|date:'M d, Y' }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Card item END -->
+{% endfor %}
+{% else %}
+<div class="alert alert-primary" role="alert">
+    No post found!
+</div>
+{% endif %}
+<!-- Pagination START -->
+<nav class="my-5" aria-label="navigation">
+    <ul class="pagination d-inline-block d-md-flex justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link ajax-link"
+               href="{% url 'post_list' %}?page={{ page_obj.previous_page_number }}" data-target="#post-list">Prev</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" tabindex="-1" aria-disabled="true">Prev</span>
+        </li>
+        {% endif %}
+        {% if page_obj.number > 2 %}
+        <li class="page-item"><a class="page-link ajax-link" data-target="#post-list"
+                                 href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:-2 }}">
+            {{ page_obj.number|add:-2 }}</a></li>
+        {% endif %}
+        {% if page_obj.number > 1 %}
+        <li class="page-item"><a class="page-link ajax-link" data-target="#post-list"
+                                 href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:-1 }}">
+            {{ page_obj.number|add:-1 }}</a></li>
+        {% endif %}
+        <li class="page-item active ajax-link"><a class="page-link ajax-link" data-target="#post-list"
+                                                  href="{% url 'post_list_partial' %}?page={{ page_obj.number }}">
+            {{ page_obj.number }}</a></li>
+        {% if page_obj.number < page_obj.paginator.num_pages %}
+        <li class="page-item">
+            <a class="page-link ajax-link" data-target="#post-list" href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:1 }}">
+            {{ page_obj.number|add:1 }}
+            </a>
+        </li>
+        {% endif %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
+        <li class="page-item"><a class="page-link ajax-link" data-target="#post-list"
+                                 href="{% url 'post_list_partial' %}?page={{ page_obj.number|add:2 }}">
+            {{ page_obj.number|add:2 }}</a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link ajax-link" href="{% url 'post_list_partial' %}?page={{ page_obj.next_page_number }}"
+               data-target="#post-list">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- Pagination END -->
+
+

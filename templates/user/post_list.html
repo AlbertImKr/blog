@@ -64,7 +64,7 @@
                     <!-- Table data -->
                     <td>
                         <div class="d-flex justify-content-center">
-                            <a href="#" class="badge {{ post.category|random_text_bg_color }} mb-2"><i
+                            <a href="#" class="badge {{ post.category.name|random_text_bg_color }} mb-2"><i
                                 class="fas fa-circle me-2 small fw-bold"></i>
                                 {{ post.category }}
                             </a>
@@ -111,16 +111,10 @@
                 <ul class="pagination pagination-sm pagination-bordered mb-0">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page=1">First</a>
-                    </li>
-                    <li class="page-item">
                         <a class="page-link ajax-link" data-target="#post-list"
                            href="{% url 'user_posts_partial' %}?page={{ page_obj.previous_page_number }}">Prev</a>
                     </li>
                     {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link">First</span>
-                    </li>
                     <li class="page-item disabled">
                         <span class="page-link">Prev</span>
                     </li>
@@ -145,23 +139,16 @@
                     {% endif %}
                     {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}??page={{ page_obj.number|add:+2 }}">{{ page_obj.number|add:+2 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:+2 }}">{{ page_obj.number|add:+2 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.next_page_number }}">Next</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list"
-                           href="{% url 'user_posts_partial' %}?page={{ page_obj.paginator.num_pages }}">Last</a>
-                    </li>
                     {% else %}
                     <li class="page-item">
                         <span class="page-link disabled">Next</span>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link disabled">Last</span>
                     </li>
                     {% endif %}
                 </ul>

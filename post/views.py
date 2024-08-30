@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DetailView
+from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic import View
 
@@ -75,6 +76,78 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         if obj.author != self.request.user:
             raise PermissionError('수정 권한이 없습니다.')
         return obj
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'post/post_list.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = Post.objects.all()
+
+        if 'username' in self.request.GET:
+            user_name = self.request.GET['username']
+            queryset = queryset.filter(author__username=user_name)
+        if 'category' in self.request.GET:
+            category = self.request.GET['category']
+            queryset = queryset.filter(category__name=category)
+        if 'tag' in self.request.GET:
+            tag = self.request.GET['tag']
+            queryset = queryset.filter(tags__name=tag)
+
+        return queryset.order_by(*self.ordering)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # 최근 카테고리와 최근 포스트 계산
+        recent_categories = self.get_queryset().values(
+                'category__name').annotate(
+                post_count=Count('category')).order_by('-post_count')[:5]
+        context['recent_categories'] = [item['category__name'] for item in
+                                        recent_categories]
+        context['recent_posts'] = self.get_queryset().order_by('-created_at')[
+                                  :5]
+
+        keywords = []
+        # 추가적인 컨텍스트 설정
+        if 'username' in self.request.GET:
+            keywords.append(f"@{self.request.GET['username']}")
+        if 'category' in self.request.GET:
+            keywords.append(f"!{self.request.GET['category']}")
+        if 'tag' in self.request.GET:
+            keywords.append(f"#{self.request.GET['tag']}")
+        if keywords:
+            context['keywords'] = keywords
+        else:
+            context['keywords'] = []
+        return context
+
+
+class PostListPartialView(ListView):
+    model = Post
+    template_name = 'post/post_list_partial.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = Post.objects.all()
+
+        if 'username' in self.request.GET:
+            user_name = self.request.GET['username']
+            queryset = queryset.filter(author__username=user_name)
+        if 'category' in self.request.GET:
+            category = self.request.GET['category']
+            queryset = queryset.filter(category__name=category)
+        if 'tag' in self.request.GET:
+            tag = self.request.GET['tag']
+            queryset = queryset.filter(tags__name=tag)
+
+        return queryset.order_by(*self.ordering)
 
 
 @login_required

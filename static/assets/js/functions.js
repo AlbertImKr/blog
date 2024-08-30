@@ -30,8 +30,8 @@ Table Of Content
 20 TRAFFIC CHART
 21 RENDER DELTA USE QUILL
 22 AJAX POST LIST LOADING
-23 POPSTATE EVENT
-24 AJAX DELETE POST
+23 AJAX DELETE POST
+24 CLICK SEARCH PARAMETER
 ====================== */
 
 "use strict";
@@ -110,7 +110,8 @@ var e = {
             e.trafficstatsChart(),
             e.renderDeltaUseQuill(),
             e.ajaxPostListLoading(),
-            e.ajaxDeletePost();
+            e.ajaxDeletePost(),
+            e.clickSearchParameter();
     },
     isVariableDefined: function (el) {
         return typeof !!el && (el) != 'undefined' && el != null;
@@ -869,43 +870,50 @@ var e = {
         const ajaxLinks = e.selectAll('.ajax-link');
         if (e.isVariableDefined(ajaxLinks)) {
             ajaxLinks.forEach(link => {
-                const target = link.getAttribute('data-target');
-                const container = e.select(target);
+
+                let target = link.getAttribute('data-target');
+                let container = e.select(target);
                 if (!e.isVariableDefined(container)) {
                     return;
                 }
                 link.addEventListener('click', function (event) {
                     event.preventDefault();
-                    const url = link.getAttribute('href');
+
+                    let url = link.getAttribute('href');
+                    let currentParams = new URLSearchParams(
+                        window.location.search);
+
+                    if (currentParams.toString()) {
+                        if (currentParams.toString().includes('page')) {
+                            currentParams.delete('page');
+                        }
+                        if (currentParams.toString()) {
+                            url += `&${currentParams.toString()}`;
+                        }
+                    }
 
                     fetch(url).then(response => {
                         return response.text();
                     }).then(data => {
-                        const baseUrl = window.location.pathname;
-                        const isExistParam = url.indexOf('?');
-
-                        const currentState = {
-                            html: document.documentElement.outerHTML,
-                            url: window.location.href
-                        }
-
+                        let isExistParam = url.indexOf('?');
                         if (isExistParam > -1) {
-                            const urlParams = url.split('?');
-                            const currentParams = new URLSearchParams(
+                            let urlParams = url.slice(isExistParam + 1)
+                            let currentParams = new URLSearchParams(
                                 window.location.search);
-
-                            urlParams[1].split('&').forEach(param => {
-                                const [key, value] = param.split('=');
+                            if (urlParams.indexOf("&") > -1) {
+                                urlParams.split('&').forEach(param => {
+                                    let [key, value] = param.split('=');
+                                    value = value.replace(/\+/g, ' ');
+                                    currentParams.set(key, value);
+                                });
+                            } else {
+                                let [key, value] = urlParams.split('=');
+                                value = value.replace(/\+/g, ' ');
                                 currentParams.set(key, value);
-                            });
-                            const newUrl = `${baseUrl}?${currentParams.toString()}`;
-                            window.history.pushState(currentState, '', newUrl);
-                        } else {
-                            window.history.pushState(currentState, '', baseUrl);
+                            }
                         }
                         container.innerHTML = data;
                         e.ajaxPostListLoading();
-                        e.popStateEvent()
                     })
                     .catch(error => {
                         console.error(error)
@@ -916,17 +924,7 @@ var e = {
         }
     },
     // END: AJAX PARTIAL LOADING
-    // START: 23 POPSTATE EVENT
-    popStateEvent: function () {
-        window.addEventListener('popstate', function (event) {
-            if (event.state) {
-                document.documentElement.innerHTML = event.state.html;
-                e.ajaxPostListLoading();
-            }
-        });
-    },
-    // END: POPSTATE EVENT
-    // START: 24 AJAX DELETE POST
+    // START: 23 AJAX DELETE POST
     ajaxDeletePost: function () {
         const deleteForms = e.selectAll('form.ajax-delete');
         const container = document.getElementById('post-list');
@@ -962,6 +960,29 @@ var e = {
                     }).catch(error => {
                         console.error(error);
                     });
+                });
+            });
+        }
+    },
+    // END: AJAX DELETE POST
+    // START: 24 CLICK SEARCH PARAMETER
+    clickSearchParameter: function () {
+        const searchParam = e.selectAll('.search-param');
+        if (e.isVariableDefined(searchParam)) {
+            searchParam.forEach(param => {
+                param.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    let url = param.getAttribute('href');
+                    const key = param.getAttribute('data-key');
+                    if (key.startsWith('@')) {
+                        url += `?username=${key.slice(1)}`;
+                    } else if (key.startsWith('#')) {
+                        url += `?tag=${key.slice(1)}`;
+                    } else if (key.startsWith('!')) {
+                        url += `?category=${key.slice(1)}`;
+                    }
+                    // url로 이동
+                    window.location.href = url;
                 });
             });
         }
