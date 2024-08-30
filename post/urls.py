@@ -8,6 +8,7 @@ from .views import PostListFragmentView
 from .views import PostListView
 from .views import PostUpdateView
 from .views import delete_post
+from .views import CategoryListView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
@@ -20,4 +21,5 @@ urlpatterns = [
          name="post_list_partial"),
     path("posts/fragment/grid/", PostListFragmentGridView.as_view()
          , name="post_list_partial_grid"),
+    path("categories/",CategoryListView.as_view(),name="category_list"),
 ]
