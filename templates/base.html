@@ -132,6 +132,8 @@ Header START -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}" id="homeMenu"><i class="bi bi-house-door me-1"></i>Home</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}"><i
+                        class="bi bi-journal-text me-1"></i>Post List</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user_manage' %}"><i class="bi bi-toggles me-1"></i>manage</a>
@@ -139,17 +141,6 @@ Header START -->
                     {% endif %}
                     <li class="nav-item"><a class="nav-link" href="contact.html"><i
                         class="bi bi-envelope-at-fill me-1"></i>Contact</a></li>
-                    <li class="nav-item dropdown">
-                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                           href="#" id="postMenu"><i class="bi bi-pencil me-1"></i>Post</a>
-                        <ul aria-labelledby="postMenu" class="dropdown-menu">
-                            <!-- dropdown submenu -->
-                            <li><a class="dropdown-item" href="{% url 'post_list' %}">Post List</a></li>
-                            {% if user.is_authenticated %}
-                            <li><a class="dropdown-item" href="{% url 'post_create' %}">Create a Post</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <!-- Font size accessibility START -->
@@ -167,7 +158,8 @@ Header START -->
                     <!-- Dark mode options START -->
                     <div class="nav-item dropdown mx-2">
                         <!-- Switch button -->
-                        <button aria-expanded="false" class="modeswitch" data-bs-display="static" data-bs-toggle="dropdown"
+                        <button aria-expanded="false" class="modeswitch" data-bs-display="static"
+                                data-bs-toggle="dropdown"
                                 id="bd-theme" type="button">
                             <svg class="theme-icon-active">
                                 <use href="#"></use>
@@ -178,7 +170,8 @@ Header START -->
                             <li class="mb-1">
                                 <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
                                         type="button">
-                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch me-1" fill="currentColor" height="16"
+                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch me-1" fill="currentColor"
+                                         height="16"
                                          viewBox="0 0 16 16" width="16">
                                         <path
                                             d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
@@ -190,7 +183,8 @@ Header START -->
                             <li class="mb-1">
                                 <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
                                         type="button">
-                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch me-1" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch me-1" fill="currentColor"
+                                         height="16" viewBox="0 0 16 16"
                                          width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
@@ -202,9 +196,11 @@ Header START -->
                                 </button>
                             </li>
                             <li>
-                                <button class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+                                <button class="dropdown-item d-flex align-items-center active"
+                                        data-bs-theme-value="auto"
                                         type="button">
-                                    <svg class="bi bi-circle-half fa-fw mode-switch me-1" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                    <svg class="bi bi-circle-half fa-fw mode-switch me-1" fill="currentColor"
+                                         height="16" viewBox="0 0 16 16"
                                          width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                         <use href="#"></use>
@@ -235,7 +231,8 @@ Header START -->
             <div class="nav flex-nowrap align-items-center">
                 <!-- Nav Search -->
                 <div class="nav-item dropdown dropdown-toggle-icon-none nav-search">
-                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navSearch"
+                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                       id="navSearch"
                        role="button">
                         <i class="bi bi-search fs-4"> </i>
                     </a>
@@ -250,7 +247,8 @@ Header START -->
                 <!-- Offcanvas menu toggler -->
                 {% if not user.is_authenticated %}
                 <div class="nav-item">
-                    <a aria-controls="offcanvasMenu" class="nav-link p-0" data-bs-toggle="offcanvas" href="#offcanvasMenu"
+                    <a aria-controls="offcanvasMenu" class="nav-link p-0" data-bs-toggle="offcanvas"
+                       href="#offcanvasMenu"
                        role="button">
                         <i class="bi bi-text-right rtl-flip fs-2" data-bs-target="#offcanvasMenu"> </i>
                     </a>
@@ -262,7 +260,8 @@ Header START -->
             <!-- Profile dropdown START -->
             <div class="nav-item ms-2 ms-md-3 dropdown">
                 <!-- Avatar -->
-                <a aria-expanded="false" class="avatar avatar-sm p-0" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
+                <a aria-expanded="false" class="avatar avatar-sm p-0" data-bs-auto-close="outside"
+                   data-bs-display="static" data-bs-toggle="dropdown"
                    href="#" id="profileDropdown" role="button">
                     <img alt="avatar" class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/01.jpg'%}">
                 </a>
@@ -304,7 +303,8 @@ Header START -->
                             <span class="me-3">mode:</span>
                             <div aria-label="Default button group" class="btn-group theme-icon-active" role="group">
                                 <button class="btn btn-light btn-sm mb-0" data-bs-theme-value="light" type="button">
-                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch" fill="currentColor" height="16"
+                                    <svg class="bi bi-brightness-high-fill fa-fw mode-switch" fill="currentColor"
+                                         height="16"
                                          viewBox="0 0 16 16" width="16">
                                         <path
                                             d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
@@ -312,7 +312,8 @@ Header START -->
                                     </svg>
                                 </button>
                                 <button class="btn btn-light btn-sm mb-0" data-bs-theme-value="dark" type="button">
-                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                    <svg class="bi bi-moon-stars-fill fa-fw mode-switch" fill="currentColor" height="16"
+                                         viewBox="0 0 16 16"
                                          width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
@@ -323,7 +324,8 @@ Header START -->
                                 </button>
                                 <button class="btn btn-light btn-sm mb-0 active" data-bs-theme-value="auto"
                                         type="button">
-                                    <svg class="bi bi-circle-half fa-fw mode-switch" fill="currentColor" height="16" viewBox="0 0 16 16"
+                                    <svg class="bi bi-circle-half fa-fw mode-switch" fill="currentColor" height="16"
+                                         viewBox="0 0 16 16"
                                          width="16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                         <use href="#"></use>

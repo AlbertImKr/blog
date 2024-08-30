@@ -132,16 +132,11 @@ Header START -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}" id="homeMenu"><i class="bi bi-house-door me-1"></i>Home</a>
                     </li>
-
-                    <!-- Nav item 2 Post -->
-                    <li class="nav-item dropdown">
-                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                           href="#" id="postMenu"><i class="bi bi-pencil me-1"></i>Post</a>
-                        <ul aria-labelledby="postMenu" class="dropdown-menu">
-                            <!-- dropdown submenu -->
-                            <li><a class="dropdown-item" href="{% url 'user_posts' %}">Post List</a></li>
-                            <li><a class="dropdown-item" href="{% url 'post_create' %}">Create a Post</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_posts' %}" id="postListMenu"><i class="bi bi-journal-text me-1"></i>Post List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'post_create' %}" id="postCreateMenu"><i class="bi bi-pencil me-1"></i>Create Post</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
