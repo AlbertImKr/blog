@@ -8,8 +8,8 @@
             <!-- Search -->
             <div class="col-md-8">
                 <form class="rounded position-relative">
-                    <input class="form-control pe-5 bg-transparent" type="search"
-                           placeholder="Search" aria-label="Search">
+                    <input aria-label="Search" class="form-control pe-5 bg-transparent"
+                           placeholder="Search" type="search">
                     <button
                         class="btn bg-transparent border-0 px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
                         type="submit"><i class="fas fa-search fs-6 "></i></button>
@@ -20,8 +20,8 @@
             <div class="col-md-3">
                 <!-- Short by filter -->
                 <form>
-                    <select class="form-select z-index-9 bg-transparent"
-                            aria-label=".form-select-sm">
+                    <select aria-label=".form-select-sm"
+                            class="form-select z-index-9 bg-transparent">
                         <option value="">Sort by</option>
                         <option>Newest</option>
                         <option>Oldest</option>
@@ -37,11 +37,11 @@
                 <!-- Table head -->
                 <thead class="table-dark">
                 <tr>
-                    <th scope="col" class="border-0 rounded-start text-center">Post Title</th>
-                    <th scope="col" class="border-0 text-center">Published Date</th>
-                    <th scope="col" class="border-0 text-center">Category</th>
-                    <th scope="col" class="border-0 text-center">Status</th>
-                    <th scope="col" class="border-0 rounded-end text-center">Action</th>
+                    <th class="border-0 rounded-start text-center" scope="col">Post Title</th>
+                    <th class="border-0 text-center" scope="col">Published Date</th>
+                    <th class="border-0 text-center" scope="col">Category</th>
+                    <th class="border-0 text-center" scope="col">Status</th>
+                    <th class="border-0 rounded-end text-center" scope="col">Action</th>
                 </tr>
                 </thead>
 
@@ -64,7 +64,7 @@
                     <!-- Table data -->
                     <td>
                         <div class="d-flex justify-content-center">
-                            <a href="#" class="badge {{ post.category|random_text_bg_color }} mb-2"><i
+                            <a class="badge {{ post.category.name|random_text_bg_color }} mb-2" href="#"><i
                                 class="fas fa-circle me-2 small fw-bold"></i>
                                 {{ post.category }}
                             </a>
@@ -81,15 +81,15 @@
                     <!-- Table data -->
                     <td>
                         <div class="d-flex gap-2 justify-content-center">
-                            <form action="{% url 'post_delete' post.pk %}" method="post" class="ajax-delete">
+                            <form action="{% url 'post_delete' post.pk %}" class="ajax-delete" method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-light btn-round mb-0"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i
+                                <button class="btn btn-light btn-round mb-0" data-bs-placement="top"
+                                        data-bs-toggle="tooltip" title="Delete" type="submit"><i
                                     class="bi bi-trash"></i></button>
                             </form>
-                            <a href="{% url 'post_update' post.pk %}"
-                               class="btn btn-light btn-round mb-0"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i
+                            <a class="btn btn-light btn-round mb-0"
+                               data-bs-placement="top"
+                               data-bs-toggle="tooltip" href="{% url 'post_update' post.pk %}" title="Edit"><i
                                 class="bi bi-pencil-square"></i></a>
                         </div>
                     </td>
@@ -107,61 +107,59 @@
             <p class="mb-sm-0 text-center text-sm-start">Page {{ page_obj.number }} of
                 {{ page_obj.paginator.num_pages }}</p>
             <!-- Pagination -->
-            <nav class="mb-sm-0 d-flex justify-content-center" aria-label="navigation">
+            <nav aria-label="navigation" class="mb-sm-0 d-flex justify-content-center">
                 <ul class="pagination pagination-sm pagination-bordered mb-0">
                     {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page=1">First</a>
-                    </li>
                     <li class="page-item">
                         <a class="page-link ajax-link" data-target="#post-list"
                            href="{% url 'user_posts_partial' %}?page={{ page_obj.previous_page_number }}">Prev</a>
                     </li>
                     {% else %}
                     <li class="page-item disabled">
-                        <span class="page-link">First</span>
-                    </li>
-                    <li class="page-item disabled">
                         <span class="page-link">Prev</span>
                     </li>
                     {% endif %}
                     {% if page_obj.number > 2 %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-2 }}">{{ page_obj.number|add:-2 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-2 }}">
+                            {{ page_obj.number|add:-2 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.number > 1 %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-1 }}">{{ page_obj.number|add:-1 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:-1 }}">
+                            {{ page_obj.number|add:-1 }}</a>
                     </li>
                     {% endif %}
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number  }}">{{ page_obj.number }}</a>
+                    <li aria-current="page" class="page-item active">
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.number  }}">{{ page_obj.number }}</a>
                     </li>
                     {% if page_obj.number < page_obj.paginator.num_pages %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:+1 }}">{{ page_obj.number|add:+1 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:+1 }}">
+                            {{ page_obj.number|add:+1 }}</a>
                     </li>
                     {% endif %}
                     {% if page_obj.number < page_obj.paginator.num_pages|add:-1 %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}??page={{ page_obj.number|add:+2 }}">{{ page_obj.number|add:+2 }}</a>
+                        <a class="page-link ajax-link" data-target="#post-list"
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.number|add:+2 }}">
+                            {{ page_obj.number|add:+2 }}
+                        </a>
                     </li>
                     {% endif %}
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link ajax-link" data-target="#post-list" href="{% url 'user_posts_partial' %}?page={{ page_obj.next_page_number }}">Next</a>
-                    </li>
-                    <li class="page-item">
                         <a class="page-link ajax-link" data-target="#post-list"
-                           href="{% url 'user_posts_partial' %}?page={{ page_obj.paginator.num_pages }}">Last</a>
+                           href="{% url 'user_posts_partial' %}?page={{ page_obj.next_page_number }}">Next</a>
                     </li>
                     {% else %}
                     <li class="page-item">
                         <span class="page-link disabled">Next</span>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link disabled">Last</span>
                     </li>
                     {% endif %}
                 </ul>
