@@ -1,10 +1,8 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
@@ -32,7 +30,7 @@ class HomeView(ListView):
                 {
                     "top_viewed_posts": get_trending_posts(),
                     "trending_categories": get_trending_categories(),
-                    "trending_tags": get_trending_tags()
+                    "trending_tags": get_trending_tags(),
                 }
         )
         return context
@@ -63,7 +61,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostCreateForm
     template_name = "post/post_update_form.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("user_posts")
     login_url = reverse_lazy("signin")
 
     def test_func(self):
@@ -71,7 +69,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == post.author
 
 
-class PostListView(PostSearchMixin,ListView):
+class PostListView(PostSearchMixin, ListView):
     model = Post
     context_object_name = "posts"
     paginate_by = 10
@@ -94,18 +92,15 @@ class PostListFragmentGridView(ListView):
     ordering = ["-created_at"]
 
 
-@login_required
-def delete_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy("user_posts")
+    login_url = reverse_lazy("signin")
+    template_name = "404.html"
 
-    if request.user == post.author:
-        post.delete()
-        return JsonResponse(
-                {"status": "성공", "message": "삭제되었습니다."}, status=204
-        )
-    return JsonResponse(
-            {"status": "실패", "message": "삭제 권한이 없습니다."}, status=403
-    )
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
 
 
 class CategoryListView(ListView):

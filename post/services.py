@@ -110,10 +110,9 @@ class PostSearchMixin:
 
         :return: 필터링된 Post 쿼리셋
         """
-        queryset = Post.objects.all()
         keywords = self.get_keywords()
         filter_criteria = create_post_search_criteria(keywords)
-        return queryset.filter(filter_criteria).order_by("-created_at")
+        return Post.objects.filter(filter_criteria).order_by("-created_at")
 
     def get_context_data(self, **kwargs):
         """
@@ -137,11 +136,6 @@ class PostSearchMixin:
 
         :return: 검색어 리스트
         """
-        keywords = []
-        if "keyword" in self.request.GET:
-            keywords = [
-                keyword.strip()
-                for keyword in self.request.GET["keyword"].split(",")
-                if keyword.strip()
-            ]
-        return keywords
+        keywords = self.request.GET.get("keyword", "")
+        return [keyword.strip() for keyword in keywords.split(",")
+                if keyword.strip()]

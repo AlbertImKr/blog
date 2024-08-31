@@ -40,8 +40,8 @@
                             {% csrf_token %}
                             <!-- Email -->
                             <div class="mb-3">
-                                <label class="form-label" for="email">Email address</label>
-                                {{ form.email }}
+                                <label class="form-label" for="email">Username</label>
+                                {{ form.username }}
                             </div>
                             <!-- Password -->
                             <div class="mb-3">
@@ -65,11 +65,11 @@
                         </form>
                         <!-- Form END -->
                         <hr>
-                        {% if error %}
+                        {% for message in messages %}
                         <div class="alert alert-danger" role="alert">
-                            {{ error }}
+                            {{ message }}
                         </div>
-                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
