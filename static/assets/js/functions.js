@@ -886,7 +886,6 @@ var e = {
                         window.location.search);
                     let windowPath = window.location.pathname;
 
-                    console.log(page)
                     if (currentParams.toString()) {
                         if (currentParams.toString().includes('page')) {
                             currentParams.delete('page');
@@ -899,7 +898,6 @@ var e = {
                     } else {
                         windowPath += `?page=${page}`;
                     }
-                    console.log(windowPath)
                     window.history.pushState({}, '', windowPath);
 
                     fetch(url).then(response => {
@@ -946,7 +944,7 @@ var e = {
             }
             sortSelect.addEventListener('change', function (event) {
                 event.preventDefault();
-                let url = window.location.pathname;
+                let url = sortSelect.getAttribute('data-link');
                 let currentParams = new URLSearchParams(window.location.search);
                 let sortValue = sortSelect.value;
                 if (currentParams.toString()) {
@@ -964,7 +962,6 @@ var e = {
                 }
                 window.location.href = url;
             });
-
         }
     },
     // END: AJAX SORT POSTS

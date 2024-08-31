@@ -19,7 +19,8 @@
                 <!-- Short by filter -->
                 <label class="visually-hidden" for="sort">Sort by</label>
                 <select aria-label=".form-select-sm"
-                        class="form-select z-index-9 bg-transparent sort-select" name="sort" data-target="#post-list">
+                        class="form-select z-index-9 bg-transparent sort-select" name="sort" data-target="#post-list"
+                        data-link="{% url 'user_posts' %}">
                     <option value="created_at" {% if request.GET.sort == 'created_at' %}selected{% endif %}>Newest</option>
                     <option value="-created_at" {% if request.GET.sort == '-created_at' %}selected{% endif %}>Oldest</option>
                 </select>
