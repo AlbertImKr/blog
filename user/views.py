@@ -1,9 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
 from django.core.paginator import Paginator
-from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
@@ -38,10 +37,8 @@ class SignInView(LoginView):
         return self.request.GET.get("next", self.success_url)
 
 
-class SignOutView(View):
-    def post(self, request):
-        logout(request)
-        return redirect("home")
+class SignOutView(LogoutView):
+    next_page = reverse_lazy("home")
 
 
 class UserPostListView(LoginRequiredMixin, View):
