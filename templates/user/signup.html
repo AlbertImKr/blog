@@ -71,9 +71,11 @@
                                 <div class="col-sm-8 text-sm-end">
                                     <span>Have an account? <a href="{% url 'signin' %}"><u>Sign in</u></a></span>
                                 </div>
-                                {% if error %}
+                                {% if messages %}
                                 <div class="alert alert-danger" role="alert">
-                                    {{ error }}
+                                    {% for message in messages %}
+                                    <p><i class="bi bi-exclamation-triangle me-1"></i>{{ message }}</p>
+                                    {% endfor %}
                                 </div>
                                 {% endif %}
                             </div>

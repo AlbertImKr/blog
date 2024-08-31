@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5,23 +6,24 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic.edit import CreateView
 
 from .forms import UserSigninForm
 from .forms import UserSignupForm
 
 
-class SignupView(View):
-    def get(self, request):
-        form = UserSignupForm()
-        return render(request, "user/signup.html", {"form": form})
+class SignupView(CreateView):
+    form_class = UserSignupForm
+    template_name = "user/signup.html"
+    success_url = reverse_lazy("home")
 
-    def post(self, request):
-        form = UserSignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("home")
-        return render(request, "user/signup.html", {"error": form.errors, "form": form})
+    def form_invalid(self, form):
+        for _field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, error)
+        return super().form_invalid(form)
 
 
 class SignInView(View):
