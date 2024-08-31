@@ -61,7 +61,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostCreateForm
     template_name = "post/post_update_form.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("user_posts")
     login_url = reverse_lazy("signin")
 
     def test_func(self):
