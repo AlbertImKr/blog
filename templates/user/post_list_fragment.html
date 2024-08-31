@@ -49,7 +49,7 @@
                 <tbody class="border-top-0">
                 <!-- Table item -->
                 {% load category_filters %}
-                {% for post in page_obj %}
+                {% for post in posts %}
                 <tr>
                     <!-- Table data -->
                     <td>
@@ -169,7 +169,7 @@
     </div>
 
 </div>
-{% for post in page_obj %}
+{% for post in posts %}
 <div class="modal fade" id="delete-post-{{ post.pk }}" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">

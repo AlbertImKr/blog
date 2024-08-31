@@ -2,14 +2,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
-from django.core.paginator import Paginator
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 
 from .forms import UserSigninForm
 from .forms import UserSignupForm
+from .services import UserPostsSearchMixin
 
 
 class SignupView(CreateView):
@@ -41,52 +40,14 @@ class SignOutView(LogoutView):
     next_page = reverse_lazy("home")
 
 
-class UserPostListView(LoginRequiredMixin, View):
+class UserPostListView(LoginRequiredMixin, UserPostsSearchMixin, ListView):
     template_name = "user/posts.html"
 
-    def get(self, request):
-        posts = self.request.user.posts.all()
 
-        paginator = Paginator(posts, 10)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-
-        return render(
-            request,
-            self.template_name,
-            {"page_obj": page_obj, "total_posts": posts.count},
-        )
-
-
-class UserManageView(LoginRequiredMixin, View):
-    template_name = "user/manage.html"
-
-    def get(self, request):
-        posts = self.request.user.posts.all()
-
-        paginator = Paginator(posts, 10)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-
-        return render(
-            request,
-            self.template_name,
-            {"page_obj": page_obj, "total_posts": posts.count},
-        )
-
-
-class UserPostListFragmentView(LoginRequiredMixin, View):
+class UserPostListFragmentView(LoginRequiredMixin, UserPostsSearchMixin,
+                               ListView):
     template_name = "user/post_list_fragment.html"
 
-    def get(self, request):
-        posts = self.request.user.posts.all().order_by("-created_at")
 
-        paginator = Paginator(posts, 10)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-
-        return render(
-            request,
-            self.template_name,
-            {"page_obj": page_obj, "total_posts": posts.count},
-        )
+class UserManageView(LoginRequiredMixin, UserPostsSearchMixin, ListView):
+    template_name = "user/manage.html"
