@@ -81,19 +81,19 @@
                     <!-- Table data -->
                     <td>
                         <div class="d-flex gap-2 justify-content-center">
-                            <form action="{% url 'post_delete' post.pk %}" class="ajax-delete" method="post">
-                                {% csrf_token %}
-                                <button class="btn btn-light btn-round mb-0" data-bs-placement="top"
-                                        data-bs-toggle="tooltip" title="Delete" type="submit"><i
-                                    class="bi bi-trash"></i></button>
-                            </form>
+                            <button class="btn btn-light btn-round mb-0" data-bs-placement="top"
+                                    title="Delete" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#delete-post-{{ post.pk }}"><i
+                                class="bi bi-trash"></i></button>
                             <a class="btn btn-light btn-round mb-0"
                                data-bs-placement="top"
                                data-bs-toggle="tooltip" href="{% url 'post_update' post.pk %}" title="Edit"><i
                                 class="bi bi-pencil-square"></i></a>
+
                         </div>
                     </td>
                 </tr>
+
                 {% endfor %}
                 </tbody>
                 <!-- Table body END -->
@@ -167,5 +167,31 @@
         </div>
         <!-- Pagination END -->
     </div>
+
 </div>
+{% for post in page_obj %}
+<div class="modal fade" id="delete-post-{{ post.pk }}" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5 text-danger" id="staticBackdropLabel">정말 삭제하시겠습니까?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제된 데이터는 복구할 수 없습니다.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+                <form action="{% url 'post_delete' post.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 <!-- Post list table END -->
