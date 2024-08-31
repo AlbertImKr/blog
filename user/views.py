@@ -42,11 +42,13 @@ class SignOutView(LogoutView):
 
 class UserPostListView(LoginRequiredMixin, UserPostsSearchMixin, ListView):
     template_name = "user/posts.html"
+    login_url = reverse_lazy("signin")
 
 
 class UserPostListFragmentView(LoginRequiredMixin, UserPostsSearchMixin,
                                ListView):
     template_name = "user/post_list_fragment.html"
+    login_url = reverse_lazy("signin")
 
 
 class UserManageView(LoginRequiredMixin, UserPostsSearchMixin, ListView):
