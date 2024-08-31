@@ -4,31 +4,28 @@
     <div class="card-body p-3">
 
         <!-- Search and select START -->
-        <div class="row g-3 align-items-center justify-content-between mb-3">
-            <!-- Search -->
+        <form class="rounded position-relative row g-3 align-items-center justify-content-between mb-3"
+              action="{% url 'user_posts' %}">
             <div class="col-md-8">
-                <form class="rounded position-relative">
-                    <input aria-label="Search" class="form-control pe-5 bg-transparent"
-                           placeholder="Search" type="search">
-                    <button
-                        class="btn bg-transparent border-0 px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
-                        type="submit"><i class="fas fa-search fs-6 "></i></button>
-                </form>
+                <input aria-label="Search" class="form-control pe-5 bg-transparent"
+                       placeholder="Search" type="search" name="keyword" required>
             </div>
-
-            <!-- Select option -->
+            <div class="col-md-1">
+                <button
+                    class="btn bg-transparent border-0 px-2 py-0"
+                    type="submit"><i class="fas fa-search fs-6 "></i></button>
+            </div>
             <div class="col-md-3">
                 <!-- Short by filter -->
-                <form>
-                    <select aria-label=".form-select-sm"
-                            class="form-select z-index-9 bg-transparent">
-                        <option value="">Sort by</option>
-                        <option>Newest</option>
-                        <option>Oldest</option>
-                    </select>
-                </form>
+                <label class="visually-hidden" for="sort">Sort by</label>
+                <select aria-label=".form-select-sm"
+                        class="form-select z-index-9 bg-transparent sort-select" name="sort" data-target="#post-list"
+                        data-link="{% url 'user_posts' %}">
+                    <option value="created_at" {% if request.GET.sort == 'created_at' %}selected{% endif %}>Newest</option>
+                    <option value="-created_at" {% if request.GET.sort == '-created_at' %}selected{% endif %}>Oldest</option>
+                </select>
             </div>
-        </div>
+        </form>
         <!-- Search and select END -->
 
         <!-- Post list table START -->

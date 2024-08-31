@@ -31,6 +31,7 @@ Table Of Content
 21 RENDER DELTA USE QUILL
 22 AJAX POSTS FRAGMENT LOADING
 23 AJAX DELETE POST
+24 AJAX SORT POSTS
 25 AJAX MORE POST LOADING
 ====================== */
 
@@ -110,7 +111,7 @@ var e = {
             e.trafficstatsChart(),
             e.renderDeltaUseQuill(),
             e.ajaxPostsFragmentLoading(),
-            e.ajaxDeletePost(),
+            e.ajaxSortPosts(),
             e.ajaxMorePostLoading();
     },
     isVariableDefined: function (el) {
@@ -880,17 +881,24 @@ var e = {
                     event.preventDefault();
 
                     let url = link.getAttribute('href');
+                    let page = url.split('page=')[1];
                     let currentParams = new URLSearchParams(
                         window.location.search);
+                    let windowPath = window.location.pathname;
 
                     if (currentParams.toString()) {
                         if (currentParams.toString().includes('page')) {
                             currentParams.delete('page');
+                            windowPath += `?page=${page}`;
                         }
                         if (currentParams.toString()) {
                             url += `&${currentParams.toString()}`;
+                            windowPath += `&${currentParams.toString()}`;
                         }
+                    } else {
+                        windowPath += `?page=${page}`;
                     }
+                    window.history.pushState({}, '', windowPath);
 
                     fetch(url).then(response => {
                         return response.text();
@@ -914,6 +922,7 @@ var e = {
                         }
                         container.innerHTML = data;
                         e.ajaxPostsFragmentLoading();
+                        e.ajaxSortPosts()
                     })
                     .catch(error => {
                         console.error(error)
@@ -924,47 +933,38 @@ var e = {
         }
     },
     // END: AJAX POSTS FRAGMENT LOADING
-    // START: 23 AJAX DELETE POST
-    ajaxDeletePost: function () {
-        const deleteForms = e.selectAll('form.ajax-delete');
-        const container = document.getElementById('post-list');
-        if (e.isVariableDefined(deleteForms) && e.isVariableDefined(
-            container)) {
-            deleteForms.forEach(form => {
-                form.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const url = form.action
-                    const csrfToken = form.querySelector(
-                        'input[name="csrfmiddlewaretoken"]').value;
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest', // AJAX 요청임을 서버에 알림
-                            'X-CSRFToken': csrfToken // CSRF 토큰 헤더에 포함
-                        }
-                    }).then(response => {
-                        if (response.ok) {
-                            // page-item active class 하위의 a 태그의 href 속성을 가져온다.
-                            const activeLink = e.select('.page-item.active a');
-                            const activeUrl = activeLink.getAttribute('href');
-                            fetch(activeUrl).then(response => {
-                                return response.text();
-                            }).then(data => {
-                                container.innerHTML = data;
-                                e.ajaxPostsFragmentLoading();
-                            }).catch(error => {
-                                console.error(error);
-                            });
-                        }
-                    }).catch(error => {
-                        console.error(error);
-                    });
-                });
+    // START: 24 AJAX SORT POSTS
+    ajaxSortPosts: function () {
+        const sortSelect = e.select('.sort-select');
+        if (e.isVariableDefined(sortSelect)) {
+            let target = sortSelect.getAttribute('data-target');
+            let container = e.select(target);
+            if (!e.isVariableDefined(container)) {
+                return;
+            }
+            sortSelect.addEventListener('change', function (event) {
+                event.preventDefault();
+                let url = sortSelect.getAttribute('data-link');
+                let currentParams = new URLSearchParams(window.location.search);
+                let sortValue = sortSelect.value;
+                if (currentParams.toString()) {
+                    if (currentParams.toString().includes('sort')) {
+                        currentParams.delete('sort');
+                    }
+                    if (currentParams.toString()) {
+                        url += `?${currentParams.toString()}`;
+                    }
+                }
+                if (currentParams.toString()) {
+                    url += `&sort=${sortValue}`;
+                } else {
+                    url += `?sort=${sortValue}`;
+                }
+                window.location.href = url;
             });
         }
     },
-    // END: AJAX DELETE POST
+    // END: AJAX SORT POSTS
     // START: 25 AJAX MORE POST LOADING
     ajaxMorePostLoading: function () {
         const morePosts = e.select('.more-posts');
