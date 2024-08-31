@@ -1,8 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -26,34 +25,17 @@ class SignupView(CreateView):
         return super().form_invalid(form)
 
 
-class SignInView(View):
+class SignInView(LoginView):
     form_class = UserSigninForm
     template_name = "user/signin.html"
+    success_url = reverse_lazy("home")
 
-    def get(self, request):
-        return render(request, self.template_name, {"form": self.form_class()})
+    def form_invalid(self, form):
+        messages.error(self.request, "아이디 또는 비밀번호가 일치하지 않습니다.")
+        return super().form_invalid(form)
 
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]
-            user = User.objects.get(email=email)
-            if user.check_password(password):
-                login(request, user)
-                if "next" in request.GET:
-                    return redirect(request.GET["next"])
-                return redirect("home")
-            else:
-                return render(
-                    request,
-                    self.template_name,
-                    {
-                        "form": form,
-                        "error": "이메일 또는 비밀번호가 일치하지 않습니다.",
-                    },
-                )
-        return render(request, self.template_name, {"form": form, "error": form.errors})
+    def get_redirect_url(self):
+        return self.request.GET.get("next", self.success_url)
 
 
 class SignOutView(View):

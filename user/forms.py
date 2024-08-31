@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UsernameField
 from django.contrib.auth.models import User
 
 
@@ -59,13 +61,13 @@ class UserSignupForm(UserCreationForm):
         return email
 
 
-class UserSigninForm(forms.Form):
-    email = forms.EmailField(
-        widget=forms.EmailInput(
+class UserSigninForm(AuthenticationForm):
+    username = UsernameField(
+        widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "id": "email",
-                "placeholder": "Email",
+                "id": "username",
+                "placeholder": "Username",
                 "required": "True",
             }
         )
