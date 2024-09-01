@@ -1,0 +1,328 @@
+{% extends 'manage_base.html' %}
+{% load static %}
+{% block css %}
+
+<!-- Favicon -->
+<link href="{% static 'assets/images/favicon.ico' %}" rel="shortcut icon">
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+<!-- Plugins CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet"
+      type="text/css">
+<link crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.css"
+      integrity="sha512-ywmPbuxGS4cJ7GxwCX+bCJweeext047ZYU2HP52WWKbpJnF4/Zzfr2Bo19J4CWPXZmleVusQ9d//RB5bq0RP7w=="
+      referrerpolicy="no-referrer" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.css"
+      integrity="sha512-MABOR9SSgAWKoiUTIp5VadLnlvw/Q+UUlX1utgLC/3ul83lxVSia/3Cm0UzQyj1kTHBkN4C9VZrGlImKctYEeA=="
+      referrerpolicy="no-referrer" rel="stylesheet"/>
+
+<!-- Theme CSS -->
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+{% block content %}
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- =======================
+    Main contain START -->
+    <section class="py-4">
+        <div class="container">
+
+            <div class="row g-4">
+                <!-- Profile cover and info START -->
+                <div class="col-12">
+                    <div class="card mb-4 position-relative z-index-9">
+                        <!-- Cover image -->
+                        <div class="py-5 h-200 rounded"
+                             style="background-image:url(assets/images/blog/16by9/big/07.jpg); background-position: center bottom; background-size: cover; background-repeat: no-repeat;">
+                        </div>
+                        <div class="card-body pt-3 pb-0">
+                            <div class="row d-flex justify-content-between">
+                                <!-- Avatar -->
+                                <div class="col-sm-12 col-md-auto text-center text-md-start">
+                                    <div class="avatar avatar-xxl mt-n5">
+                                        <img class="avatar-img rounded-circle border border-white border-3 shadow"
+                                             src="assets/images/avatar/03.jpg" alt="">
+                                    </div>
+                                </div>
+                                <!-- Profile info -->
+                                <div
+                                    class="col-sm-12 col-md text-center text-md-start d-md-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="my-1">{{ profile.user.username }}<i
+                                            class="bi bi-patch-check-fill text-info small"></i></h4>
+                                        <ul class="list-inline">
+                                            {% if profile.job_title %}
+                                            <li class="list-inline-item"><i class="bi bi-person-fill me-1"></i>
+                                                {{ profile.job_title }}
+                                            </li>
+                                            {% endif %}
+                                            {% if profile.location %}
+                                            <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i>
+                                                {{ profile.location }}
+                                            </li>
+                                            {% endif %}
+                                            <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i>
+                                                Joined on {{ profile.created_at|date:"M d, Y" }}
+                                            </li>
+                                        </ul>
+                                        <p class="m-0"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Profile info END -->
+            </div>
+
+            <div class="row g-4">
+                <!-- Left sidebar START -->
+                <div class="col-lg-7 col-xxl-8">
+                    <!-- Profile START -->
+                    <form action="{% url 'user_profile_edit' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card border mb-4">
+                            <div class="card-header border-bottom p-3">
+                                <h5 class="card-header-title mb-0">Profile</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Full name -->
+                                <div class="mb-3">
+                                    <label class="form-label">Full name</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="{{ profile.user.firstname }}"
+                                               placeholder="First name" name="user.firstname">
+                                        <input type="text" class="form-control" value="{{ profile.user.lastname }}"
+                                               placeholder="Last name" name="user.lastname">
+                                    </div>
+                                </div>
+                                <!-- Profile picture -->
+                                <div class="mb-3">
+                                    <label class="form-label">Profile picture</label>
+                                    <!-- Avatar upload START -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="position-relative me-3">
+                                            <!-- Avatar edit -->
+                                            <div class="position-absolute top-0 end-0  z-index-9">
+                                                <a class="btn btn-sm btn-light btn-round mb-0 mt-n1 me-n1" href="#"> <i
+                                                    class="bi bi-pencil"></i> </a>
+                                            </div>
+                                            <!-- Avatar preview -->
+                                            <div class="avatar avatar-xl">
+                                                <img
+                                                    class="avatar-img rounded-circle border border-white border-3 shadow"
+                                                    src="assets/images/avatar/03.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <!-- Avatar remove button -->
+                                        <div class="avatar-remove">
+                                            <button type="button" class="btn btn-light">Delete</button>
+                                        </div>
+                                    </div>
+                                    <!-- Avatar upload END -->
+                                </div>
+                                <!-- Job title -->
+                                <div class="mb-3">
+                                    <label class="form-label">Job title</label>
+                                    {{ form.job_title }}
+                                </div>
+                                <!-- Location -->
+                                <div class="mb-3">
+                                    <label class="form-label">Location</label>
+                                    {{ form.location }}
+                                </div>
+                                <!-- Bio -->
+                                <div class="mb-3">
+                                    <label class="form-label">Bio</label>
+                                    {{ form.bio }}
+                                    <div class="form-text">Brief description for your profile.</div>
+                                </div>
+                                <!-- Birthday -->
+                                <div>
+                                    <label class="form-label">Birthday</label>
+                                    {{ form.birth_date }}
+                                </div>
+                                <div class="card-header border-bottom p-3">
+                                    <h5 class="card-header-title mb-0">Personal information</h5>
+                                </div>
+                                <!-- Save button -->
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Profile END -->
+
+                        <!-- Personal information START -->
+                        <div class="card border mb-4">
+                            <div class="card-header border-bottom p-3">
+                                <h5 class="card-header-title mb-0">Personal information</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    {{ form.email }}
+                                </div>
+                                <!-- Address -->
+                                <div class="mb-3">
+                                    <label class="form-label">Address</label>
+                                    {{ form.address }}
+                                </div>
+                                <!-- Save button -->
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Personal information END -->
+
+                        <!-- Social links START -->
+                        <div class="card border mb-4">
+                            <div class="card-header border-bottom p-3">
+                                <h5 class="card-header-title mb-0"> Social links</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Facebook -->
+                                <div class="mb-3">
+                                    <label class="form-label">Facebook</label>
+                                    {{ form.facebook }}
+                                </div>
+                                <!-- linkedin -->
+                                <div class="mb-3">
+                                    <label class="form-label">linkedin</label>
+                                    {{ form.linkedin }}
+                                </div>
+                                <!-- Twitter -->
+                                <div class="mb-3">
+                                    <label class="form-label">Twitter</label>
+                                    {{ form.twitter }}
+                                </div>
+                                <!-- Tistory -->
+                                <div class="mb-3">
+                                    <label class="form-label">Tistory</label>
+                                    {{ form.tistory }}
+                                </div>
+                                <!-- github -->
+                                <div class="mb-3">
+                                    <label class="form-label">github</label>
+                                    {{ form.github }}
+                                </div>
+                                <!-- website -->
+                                <div class="mb-3">
+                                    <label class="form-label">website</label>
+                                    {{ form.website }}
+                                </div>
+                                <!-- Save button -->
+                                <div class="d-flex justify-content-end mt-4">
+                                    <a href="#" class="btn btn-primary">Save changes</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social links END -->
+                    </form>
+
+                    <!-- Update password START -->
+                    <div class="card border">
+                        <div class="card-header border-bottom p-3">
+                            <h5 class="card-header-title mb-0">Update password</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Current password</label>
+                                <input class="form-control" type="password" placeholder="Enter current password">
+                            </div>
+                            <!-- New password -->
+                            <div class="mb-3">
+                                <label class="form-label" id="psw-strength-message"></label>
+                                <div class="input-group">
+                                    <input class="form-control fakepassword" type="password" id="psw-input"
+                                           placeholder="Enter new password">
+                                    <span class="input-group-text p-0">
+                  <i class="fakepasswordicon far fa-eye cursor-pointer p-2 w-40px"></i>
+                </span>
+                                </div>
+                                <div class="rounded mt-1" id="psw-strength"></div>
+                            </div>
+                            <!-- New password -->
+                            <div>
+                                <label class="form-label">Confirm new password</label>
+                                <input class="form-control" type="password" placeholder="Enter new password">
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <a href="#" class="btn btn-primary">Change password</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Left sidebar END -->
+
+                <!-- Right sidebar START -->
+                <div class="col-lg-5 col-xxl-4">
+
+                    <!-- Deactivate account START -->
+                    <div class="card border mb-4">
+                        <div class="card-header border-bottom p-3">
+                            <h5 class="card-header-title mb-0">Deactivate Account</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6>Before you go...</h6>
+                            <ul>
+                                <li>Take backup of your data <a href="#">Here</a></li>
+                                <li>Account deletion is final. There will be no way to restore your account</li>
+                            </ul>
+                            <div class="form-check form-check-md my-3">
+                                <input class="form-check-input" type="checkbox" value="" id="deleteaccountCheck">
+                                <label class="form-check-label" for="deleteaccountCheck">Yes, I'd really like to delete
+                                    my account</label>
+                            </div>
+                            <a href="#" class="btn btn-success-soft my-1">Keep my account</a>
+                            <a href="#" class="btn btn-danger my-1">Delete my account</a>
+                        </div>
+                    </div>
+                    <!-- Deactivate account START -->
+                    <p><i class="bi bi-info-circle me-2"></i>
+                        This account was created on {{ profile.created_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =======================
+    Main contain END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+{% endblock %}
+{% block footer %}
+<!-- =======================
+Footer START -->
+<footer class="mb-3">
+    {% include 'foot_copyright.html' %}
+</footer>
+<!-- =======================
+Footer END -->
+{% endblock %}
+{% block scripts %}
+
+<!-- Bootstrap JS -->
+<script crossorigin="anonymous"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script crossorigin="anonymous"
+        integrity="sha512-piY4QAXPoG2xLdUZZbcc5klXzMxckrQKY9A2o6nKDRt9inolvvLbvGPC+z9IZ29b28UJlD05B7CjxxPaxh4bjQ=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0/apexcharts.min.js"></script>
+
+<!-- Template Functions -->
+<script src="{% static '/assets/js/functions.js' %}"></script>
+{% endblock %}

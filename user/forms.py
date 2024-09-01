@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UsernameField
 from django.contrib.auth.models import User
 
+from .models import Profile
+
 
 class UserSignupForm(UserCreationForm):
     email = forms.EmailField(
@@ -83,3 +85,38 @@ class UserSigninForm(AuthenticationForm):
             }
         )
     )
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = (
+            "job_title",
+            "location",
+            "bio",
+            "birth_date",
+            "email",
+            "address",
+            "facebook",
+            "linkedin",
+            "twitter",
+            "tistory",
+            "github",
+            "website",
+        )
+        widgets = {
+            'job_title': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control',
+                                                 'type': 'date'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'facebook': forms.URLInput(attrs={'class': 'form-control'}),
+            'linkedin': forms.URLInput(attrs={'class': 'form-control'}),
+            'twitter': forms.URLInput(attrs={'class': 'form-control'}),
+            'tistory': forms.URLInput(attrs={'class': 'form-control'}),
+            'github': forms.URLInput(attrs={'class': 'form-control'}),
+            'website': forms.URLInput(attrs={'class': 'form-control'}),
+        }
+

@@ -6,6 +6,7 @@ from .views import SignupView
 from .views import UserManageView
 from .views import UserPostListFragmentView
 from .views import UserPostListView
+from .views import UserProfileUpdateView
 
 urlpatterns = [
     path('signup/', SignupView.as_view(), name='signup'),
@@ -15,4 +16,6 @@ urlpatterns = [
     path('users/manage/', UserManageView.as_view(), name='user_manage'),
     path('users/posts/fragment/', UserPostListFragmentView.as_view(),
          name='user_posts_partial'),
+    path('users/profile/', UserProfileUpdateView.as_view(),
+         name='user_profile_edit'),
 ]
