@@ -235,17 +235,19 @@
                         <div class="card-header border-bottom p-3">
                             <h5 class="card-header-title mb-0">Update password</h5>
                         </div>
-                        <div class="card-body">
+                        <form class="card-body" action="{% url 'user_password_edit' %}" method="post">
+                            {% csrf_token %}
                             <div class="mb-3">
                                 <label class="form-label">Current password</label>
-                                <input class="form-control" type="password" placeholder="Enter current password">
+                                <input class="form-control" type="password" placeholder="Enter current password"
+                                       name="old_password">
                             </div>
                             <!-- New password -->
                             <div class="mb-3">
                                 <label class="form-label" id="psw-strength-message"></label>
                                 <div class="input-group">
                                     <input class="form-control fakepassword" type="password" id="psw-input"
-                                           placeholder="Enter new password">
+                                           placeholder="Enter new password" name="new_password1">
                                     <span class="input-group-text p-0">
                   <i class="fakepasswordicon far fa-eye cursor-pointer p-2 w-40px"></i>
                 </span>
@@ -255,12 +257,22 @@
                             <!-- New password -->
                             <div>
                                 <label class="form-label">Confirm new password</label>
-                                <input class="form-control" type="password" placeholder="Enter new password">
+                                <input class="form-control" type="password" placeholder="Enter new password"
+                                       name="new_password2">
                             </div>
                             <div class="d-flex justify-content-end mt-4">
-                                <a href="#" class="btn btn-primary">Change password</a>
+                                <button type="submit" class="btn btn-primary">Change password</button>
                             </div>
-                        </div>
+                            {% if messages %}
+                            <div class="alert {P  mt-3" role="alert">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
                 <!-- Left sidebar END -->

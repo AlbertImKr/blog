@@ -2,16 +2,18 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import PasswordChangeView
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
 
+from .forms import ProfileEditForm
 from .forms import UserSigninForm
 from .forms import UserSignupForm
-from .forms import ProfileEditForm
-from .services import UserPostsSearchMixin
 from .models import Profile
+from .services import UserPostsSearchMixin
 
 
 class SignupView(CreateView):
@@ -68,3 +70,20 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user.profile
+
+
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = "404.html"
+    success_url = reverse_lazy("user_profile_edit")
+    login_url = reverse_lazy("signin")
+
+    def form_valid(self, form):
+        messages.success(self.request, "비밀번호가 변경되었습니다.", extra_tags="success")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "비밀번호 변경에 실패했습니다.", extra_tags="danger")
+        for _field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, error, extra_tags="danger")
+        return redirect(self.success_url)
