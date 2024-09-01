@@ -9,4 +9,5 @@ urlpatterns = [
     path("", include("post.urls")),
     path("", include("user.urls")),
     path("contact/", ContactView.as_view(), name="contact"),
+    path("", include("image.urls")),
 ]

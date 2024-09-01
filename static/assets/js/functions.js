@@ -33,6 +33,8 @@ Table Of Content
 23 AJAX DELETE POST
 24 AJAX SORT POSTS
 25 AJAX MORE POST LOADING
+26 UPLOAD IMAGE
+27 DELETE IMAGE
 ====================== */
 
 "use strict";
@@ -112,6 +114,8 @@ var e = {
             e.renderDeltaUseQuill(),
             e.ajaxPostsFragmentLoading(),
             e.ajaxSortPosts(),
+            e.uploadImage(),
+            e.deleteImage(),
             e.ajaxMorePostLoading();
     },
     isVariableDefined: function (el) {
@@ -986,6 +990,118 @@ var e = {
         }
     },
     // END: AJAX MORE POST LOADING
+    // START: 26 UPLOAD IMAGE
+    uploadImage: function () {
+        const uploadImage = e.select('.upload-image');
+        if (e.isVariableDefined(uploadImage)) {
+            uploadImage.addEventListener('change', function (event) {
+                let files = uploadImage.files
+                if (files.length === 0) {
+                    console.error('No file selected');
+                    return;
+                }
+                if (files.length > 1) {
+                    console.error('Only one file can be uploaded');
+                    return;
+                }
+                let image = files[0];
+
+                let fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (fileTypes.indexOf(image.type) === -1) {
+                    console.error('File type not supported');
+                    return;
+                }
+
+                let url = uploadImage.getAttribute('data-url');
+                url += `?file_name=${encodeURIComponent(
+                    image.name)}&file_type=${encodeURIComponent(
+                    image.type)}&file_size=${image.size}`;
+                // 1. Signed URL 요청
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                }).then(response => {
+                    return response.json();
+                }).then(response => {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+                    // 2. Signed URL로 파일 업로드
+                    return fetch(response.url, {
+                        method: 'PUT',
+                        body: image,
+                        mode: 'cors',
+                    })
+                }).then(
+                    response => {
+                        if (response.ok) {
+                            return response.url
+                        }
+                        console.error('Network response was not ok.');
+                    }
+                ).then(url => {
+                    // 3. 이미지 URL을 서버에 보내서 이미지 생성 요청
+                    let uploadUrl = uploadImage.getAttribute('data-upload-url');
+                    let csrfToken = uploadImage.getAttribute('data-csrf-token');
+                    if (!url) {
+                        return;
+                    }
+                    if (url.indexOf('?') > -1) {
+                        url = url.split('?')[0];
+                    }
+                    document.getElementById('image-preview-div').classList.remove('d-none');
+                    document.getElementById('image-preview').src = url;
+                    document.getElementById('image-div').classList.remove('col-sm-12', 'col-md-12');
+                    document.getElementById('image-div').classList.add('col-sm-8', 'col-md-10');
+
+                    return fetch(uploadUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRFToken': csrfToken,
+                        },
+                        body: JSON.stringify({url: url}),
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const imageId = data.image_id;
+                    const target = document.getElementById(
+                        uploadImage.getAttribute("data-target"));
+                    target.value = imageId;
+
+
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            }, false);
+        }
+    },
+    // END: UPLOAD IMAGE
+    // START: 27 DELETE IMAGE
+    deleteImage: function () {
+        const deleteButton = e.select('#delete-image-button');
+        if (e.isVariableDefined(deleteButton)) {
+            deleteButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const target = e.select(deleteButton.getAttribute('data-target'));
+                if (target) {
+                    target.value = '';
+                }
+                document.getElementById('image-preview-div').classList.add('d-none');
+                document.getElementById('image-preview').src = '';
+                document.getElementById('image-div').classList.remove('col-sm-8', 'col-md-10');
+                document.getElementById('image-div').classList.add('col-sm-12', 'col-md-12');
+            });
+        }
+    },
+    // END: DELETE IMAGE
 };
 e.init();
 

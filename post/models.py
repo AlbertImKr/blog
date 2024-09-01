@@ -15,6 +15,9 @@ class Post(models.Model):
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="posts"
     )
+    image = models.OneToOneField(
+        "image.Image", on_delete=models.SET_NULL, related_name="post", null=True
+    )
 
     def __str__(self):
         return self.title
