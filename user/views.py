@@ -5,10 +5,13 @@ from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 
 from .forms import UserSigninForm
 from .forms import UserSignupForm
+from .forms import ProfileEditForm
 from .services import UserPostsSearchMixin
+from .models import Profile
 
 
 class SignupView(CreateView):
@@ -53,3 +56,15 @@ class UserPostListFragmentView(LoginRequiredMixin, UserPostsSearchMixin,
 
 class UserManageView(LoginRequiredMixin, UserPostsSearchMixin, ListView):
     template_name = "user/manage.html"
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileEditForm
+    context_object_name = "profile"
+    template_name = "user/profile-edit.html"
+    success_url = reverse_lazy("user_profile_edit")
+    login_url = reverse_lazy("signin")
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
