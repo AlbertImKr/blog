@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Post
 from .models import Tag
+from image.models import Image
 
 
 class PostCreateForm(forms.ModelForm):
@@ -14,6 +15,9 @@ class PostCreateForm(forms.ModelForm):
                 "placeholder": "business, finance, health ...",
             }
         ),
+    )
+    image_id = forms.IntegerField(
+        required=False, widget=forms.HiddenInput(attrs={"id": "imageId"})
     )
 
     class Meta:
@@ -67,6 +71,16 @@ class PostCreateForm(forms.ModelForm):
 
     def save(self, commit=True):
         post = super().save(commit=False)
+
+        image_id = self.cleaned_data.get("image_id")
+        if image_id:
+            image = Image.objects.get(id=image_id)
+            if image.user != post.author:
+                raise forms.ValidationError("Invalid Image")
+            post.image = image
+        else:
+            post.image = None
+
         post.save()
         tags_names = self.cleaned_data.get("tags", [])
         tags = []

@@ -119,24 +119,59 @@
                                             {{ form.content }}
                                         </div>
 
+
                                         <div class="mb-3">
                                             <!-- Image -->
-                                            <div class="position-relative">
-                                                <h6 class="my-2">Upload post image here, or<a class="text-primary"
-                                                                                              href="#!">
-                                                    Browse</a></h6>
-                                                <label class="w-100" style="cursor:pointer;">
-                                                  <span>
+                                            <div class="row align-items-center mb-2" id="image-container">
+                                                {% if post.image %}
+                                                {% with post.image as image %}
+                                                <div class="col-4 col-md-2" id="image-preview-div">
+                                                    <div class="position-relative">
+                                                        <img id="image-preview" class="rounded" src="{{ image.image_url }}" alt="">
+                                                        <div class="position-absolute top-0 end-0 mt-n2 me-n2">
+                                                            <a id="delete-image-button"  class="btn btn-icon btn-xs btn-danger" href="#" data-target="#image-id"><i
+                                                                class="bi bi-x"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endwith %}
+                                                <div class="col-sm-8 col-md-10 position-relative" id="image-div">
+                                                    {% else %}
+                                                    <div class="col-4 col-md-2 d-none" id="image-preview-div">
+                                                        <div class="position-relative">
+                                                            <img id="image-preview" class="rounded" src="" alt="">
+                                                            <div class="position-absolute top-0 end-0 mt-n2 me-n2">
+                                                                <a id="delete-image-button"  class="btn btn-icon btn-xs btn-danger" href="#" data-target="#image-id"><i
+                                                                    class="bi bi-x"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-12 position-relative" id="image-div">
+                                                        {% endif %}
+                                                        <h6 class="my-2">Upload post image here, or<a class="text-primary"
+                                                                                                      href="#!">
+                                                            Browse</a></h6>
+                                                        <label class="w-100" style="cursor:pointer;">
+                                                    <span>
                                                     <input accept="image/gif, image/jpeg, image/png"
-                                                           class="form-control stretched-link" id="image"
-                                                           name="my-image"
-                                                           type="file">
-                                                  </span>
-                                                </label>
+                                                           class="form-control stretched-link upload-image" id="image"
+                                                           data-url="{% url 'generate_presigned_url' %}"
+                                                           data-upload-url="{% url 'upload_image' %}"
+                                                           data-csrf-token="{{ csrf_token }}"
+                                                           data-target="image-id" type="file">
+                                                    </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <p class="small mb-0 mt-2"><b>Note:</b> Only JPG, JPEG and PNG. Our
+                                                    suggested dimensions are 600px * 450px. Larger image will be cropped to
+                                                    4:3 to fit our thumbnails/previews.</p>
                                             </div>
-                                            <p class="small mb-0 mt-2"><b>Note:</b> Only JPG, JPEG and PNG. Our
-                                                suggested dimensions are 600px * 450px. Larger image will be cropped to
-                                                4:3 to fit our thumbnails/previews.</p>
+                                            {% if post.image %}
+                                            <input type="hidden" name="image_id" id="image-id" value="{{ post.image.id }}">
+                                            {% else %}
+                                            <input type="hidden" name="image_id" id="image-id" value="">
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-lg-7">
