@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UsernameField
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 
 from .models import Profile
@@ -120,3 +121,37 @@ class ProfileEditForm(forms.ModelForm):
             'website': forms.URLInput(attrs={'class': 'form-control'}),
         }
 
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "current_password",
+                "placeholder": "Old Password",
+                "required": "True",
+            }
+        )
+    )
+
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "new_password",
+                "placeholder": "New Password",
+                "required": "True",
+            }
+        )
+    )
+
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "confirm_new_password",
+                "placeholder": "Confirm New Password",
+                "required": "True",
+            }
+        )
+    )
