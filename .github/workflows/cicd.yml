@@ -31,8 +31,6 @@ jobs:
           key: ${{ secrets.key }}
           script: |
             set -e
-            cd /home/ubuntu/app
-            
             cd /home/ubuntu/app/blog
             git pull origin main
             
