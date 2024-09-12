@@ -35,7 +35,6 @@ jobs:
             
             cd /home/ubuntu/app/blog
             git pull origin main
-            echo "${{ secrets.env }}" >> .env
             
             source venv/bin/activate
             pip install -r requirements.txt
