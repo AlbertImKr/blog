@@ -40,6 +40,6 @@ jobs:
             source venv/bin/activate
             pip install -r requirements.txt
             
-            pyhton3 manage.py collectstatic
+            pyhton manage.py collectstatic
             
             sudo systemctl restart site.service
